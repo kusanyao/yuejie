@@ -1,0 +1,104 @@
+{extend name="public/base" /}
+{block name="right"}
+<div class="crumbs">
+	<span>创建高校</span>
+</div>
+<ul class="edit_from">
+<form action="" method="post">
+	<li>高校名称：<input type="text" name="name"></li>
+	<li>英文名称：<input type="text" name="english"></li>
+	<li>成立年份：<input type="text" name="year"></li>
+	<li>
+		学校介绍：
+		<textarea name="introduction"></textarea>
+	</li>
+	<li>
+		高校性质：
+		<input type="radio" name="nature" value="1">985
+		<input type="radio" name="nature" value="2">211
+		<input type="radio" name="nature" value="3">2011
+		<input type="radio" name="nature" value="4">普通
+	</li>
+	<li>
+		高校大图：
+		<input type="text" name="images">
+	</li>
+	<li>
+		联系地址：
+		<select class="area_select" data-area-level="1">
+			<option>选择省份</option>
+			<?php foreach($province as $v):?>
+				<option value="<?php echo $v['cb_id'];?>"><?php echo $v['cb_area']?></option>
+			<?php endforeach;?>
+		</select>
+		<select class="area_select" data-area-level="2">
+			<option>选择城市</option>
+		</select>
+		<select class="area_select" data-area-level="3" name="addr_aid">
+			<option>选择地区</option>
+		</select>
+		<input type="" name="" placeholder="请填写具体地址">
+	</li>
+	<li>
+		对接人：
+		<input type="text" name="person" placeholder="姓名">
+		<input type="text" name="person_phone" placeholder="电话">
+	</li>
+	<li>
+		排序：
+		<input type="text" name="sort" placeholder="">
+	</li>
+	<li>
+		上架时间：
+		<input type="text" name="start" placeholder="">-
+		<input type="text" name="end" placeholder="">
+	</li>
+	<li>
+		显示状态：
+		<input type="radio" name="state" value="">上架
+		<input type="radio" name="state" value="">下架
+	</li>
+	<li>
+		<input id="submit" type="button" name="" value="创建高校">
+	</li>
+	</form>
+</ul>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	$(function(){
+		// 提交数据
+		$('#submit').click(function(){
+			var data = $("form").serialize();
+			$.post("",data,function(result){
+			    if(result.code == 0 ){
+			    	window.location.href = '/school';
+			    }
+			});
+		});
+
+		// 获取地址数据
+		$('.area_select').change(function(){
+			var pid   = $(this).val();
+			var level = $(this).data('area-level');
+			$.get("/citybook/items",{pid:pid},function(res){
+			    if(res.code == 200 ){
+			    	var option = '';
+			    	$.each(res.result,function(key,value){
+			    		option += '<option value='+value.cb_id+'>'+value.cb_area+'</option>'
+			    	});
+			    	if(level == 1){
+			    		// 清空城市和地区
+			    		$('[data-area-level="2"]').html('<option>选择城市</option>'+option);
+			    		$('[data-area-level="3"]').html('<option>选择地区</option>');
+			    	}else if(level == 2){
+			    		$('[data-area-level="3"]').html('<option>选择地区</option>'+option);
+			    	}
+			    }else{
+			    	alert(res.error);
+			    }
+			});
+		});
+	});
+</script>
+{/block}

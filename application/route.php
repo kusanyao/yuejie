@@ -10,12 +10,18 @@
 // +----------------------------------------------------------------------
 
 return [
-    '__pattern__' => [
-        'name' => '\w+',
+	'__domain__'=>[
+        'admin'      => 'admin',
+        // // 泛域名规则建议在最后定义
+        // '*.user'    =>  'user',
+        // '*'         => 'book',
     ],
-    '[hello]'     => [
-        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/hello', ['method' => 'post']],
-    ],
+    // '__pattern__' => [
+    //     'name' => '\w+',
+    // ],
+    // '[hello]'     => [
+    //     ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
+    //     ':name' => ['index/hello', ['method' => 'post']],
+    // ],
 
 ];

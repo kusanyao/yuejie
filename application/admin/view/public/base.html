@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>{block name="title"}后台{/block}</title>
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/main.css">
+</head>
+<body>
+	<header>
+		<div class="logo">
+			<a href="#">
+				<img src="logo.jpg">
+			</a>
+		</div>
+		<ul>
+			<li><a href="#">admin</a></li>
+		</ul>
+	</header>
+	<div class="left">
+		<div class="">
+			<span>...</span>
+		</div>
+		<ul>
+			<li><a href="#">-高校</a></li>
+			<li class="current"><a href="/school/index">高校列表</a></li>
+			<li><a href="/school/create">创建高校</a></li>
+			<li><a href="#">数据统计</a></li>
+			<li><a href="#">-用户</a></li>
+		</ul>
+	</div>
+	<div class="rigth">
+		{block name="right"}{/block}
+	</div>
+	<script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+	{block name="script"}{/block}
+</body>
+</html>
