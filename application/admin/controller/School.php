@@ -10,7 +10,10 @@ class School extends Base
 	 */
     public function index()
     {
-        return $this->fetch();
+        $schoolList = model('School')->getSchoolList();
+        return $this->fetch('index',array(
+            'schoolList' => $schoolList
+        ));
     }
 
     /**
@@ -25,21 +28,24 @@ class School extends Base
             ));
     	}
         $aid = input('param.addr_aid/d');
-        $cid = 
+        $fulArea = model('Citybook')->getFulAraeByAid($aid);
         $data = array(
             'sc_name'  => input('param.name/s'),
             'sc_english'  => input('param.english/s'),
-            'sc_nature'   => input('param.english/s'),
-            'sc_person'   => input('param.person/d'),
-            'sc_addr_aid' => $aid,
+            'sc_nature'   => input('param.nature/s'),
+            'sc_person'   => input('param.person/s'),
+            'sc_addr_aid' => $fulArea['item_a']['cb_id'],
+            'sc_addr_cid' => $fulArea['item_c']['cb_id'],
+            'sc_addr_pid' => $fulArea['item_p']['cb_id'],
+            'sc_addr_ful' => $fulArea['ful'],
             'sc_addr_street'   => input('param.addr_street/s'),
-            'sc_person_tel'    => input('param.person_tel/d'),
+            'sc_person_tel'    => input('param.person_tel/s'),
             'sc_introduction'  => input('param.introduction/s'),
             'sc_sort'  => input('param.sort/d'),
             'sc_start' => input('param.start/d'),
             'sc_end'   => input('param.end/d'),
             'sc_state' => input('param.state/d'),
-        );    	
+        );	
 
         $result = $this->validate($data,'School.create');
         if(true !== $result){

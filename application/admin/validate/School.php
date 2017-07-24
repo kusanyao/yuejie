@@ -6,22 +6,20 @@ use think\Validate;
 class School extends Validate
 {
     protected $rule = [
-	    'sc_name' => 'length:4,25',
-		'sc_english' => '',
-		'sc_introduction' => '',
-		'sc_nature' => '',
+	    'sc_name' => 'require|length:4,25',
+		'sc_english' => 'require|length:4,25',
+		'sc_introduction' => 'require|length:4,25',
+		'sc_nature' => 'require|length:3,6',
 		'sc_addr_pid' => 'require',
-		'sc_addr_cid' => '',
-		'sc_addr_aid' => '',
-		'sc_addr_ful' => '',
-		'sc_addr_street' => '',
-		'sc_person' => '',
-		'sc_person_phone' => '',
-		'sc_sort' => '',
-		'sc_start' => '',
-		'sc_end' => '',
-		'sc_insert_at' => '',
-		'sc_update_at' => '',
+		'sc_addr_cid' => 'require',
+		'sc_addr_aid' => 'require',
+		'sc_addr_ful' => 'require',
+		'sc_addr_street' => 'require',
+		'sc_person' => 'require',
+		'sc_person_tel' => 'require|number',
+		'sc_sort' => 'number',
+		'sc_start' => 'number',
+		'sc_end' => 'number',
     ];
 
     protected $message  =   [

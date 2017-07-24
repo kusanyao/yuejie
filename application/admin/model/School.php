@@ -1,9 +1,12 @@
 <?php
 namespace app\admin\model;
+use think\Db;
 
-use think\Model;
-
-class User extends Model
+class School
 {
-	
+	public function getSchoolList()
+	{
+		$result = Db::name('school')->select();
+		return $result;
+	}
 }
