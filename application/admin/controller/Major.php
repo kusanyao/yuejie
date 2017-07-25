@@ -3,15 +3,17 @@ namespace app\admin\controller;
 use think\Db;
 use think\Validate;
 
-class School extends Base
+class College extends Base
 {
 	/**
 	 * 列表
 	 */
     public function list()
     {
-        $schoolList = model('School')->getSchoolList();
+        $schoolId = input('param.school/d');
+        $schoolList = model('College')->getCollegeListBySchoolId($schoolId);
         return $this->fetch('list',array(
+            'schoolId'   => $schoolId,
             'schoolList' => $schoolList
         ));
     }
@@ -19,12 +21,15 @@ class School extends Base
     /**
      * 创建
      */
-    public function create()
+    public function edit()
     {
+        $schoolId = input('param.school/d');
+        $school   = model('School')->getSchoolById($schoolId);
         $province = model('Citybook')->getItemsByLevel(1);
     	if(request()->isGet()){
-    		return view('create',array(
+    		return view('edit',array(
                 'province' => $province,
+                'school' => $school,
             ));
     	}
         $aid = input('param.addr_aid/d');

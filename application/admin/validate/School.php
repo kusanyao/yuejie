@@ -20,6 +20,7 @@ class School extends Validate
 		'sc_sort' => 'number',
 		'sc_start' => 'number',
 		'sc_end' => 'number',
+		'sc_state' => 'number',
     ];
 
     protected $message  =   [
