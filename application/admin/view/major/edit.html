@@ -1,0 +1,184 @@
+{extend name="public/base" /}
+{block name="right"}
+<div class="crumbs">
+	<span>创建专业</span>
+</div>
+<ul class="edit_from">
+<form method="post">
+	<li>
+		<span>高校名称：</span>
+		<input type="text" value="<?php echo $school['sc_name'];?>" disabled />
+	</li>
+	<li>
+		<span>学院名称：</span>
+		<input type="hidden" name="school" value="<?php echo $school['sc_id'];?>">
+		<input type="text" value="<?php echo $college['co_name'];?>" disabled />
+	</li>
+	<li>
+		<span>专业名称：</span>
+		<input type="hidden" name="id" value="<?php echo isset($major['ma_id'])?$major['ma_id']:'';?>">
+		<input type="text" name="name" value="<?php echo isset($major['ma_name'])?$major['ma_name']:'';?>">
+	</li>
+	<li>
+		<span>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费：</span>
+		<input type="text" name="tuition" placeholder="" value="<?php echo isset($major['ma_tuition'])?$major['ma_tuition']:'';?>">
+	</li>
+	<li>
+		<span>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;制：</span>
+		<input type="text" name="institution" placeholder="" value="<?php echo isset($major['ma_institution'])?$major['ma_institution']:'';?>" />
+	</li>
+	<li>
+		<span>专业介绍：</span>
+		<textarea name="introduction" placeholder="该文案显示在专详（在标题栏下方做专业详细介绍）"><?php echo isset($major['ma_introduction'])?$major['ma_introduction']:'';?></textarea>
+	</li>	
+	<li>
+		<span>专业大图：</span>
+		<input type="file" name="images">
+	</li>
+	<li>
+		<span>科段支持：</span>
+		<?php if(empty($major)):?>
+		<input type="radio" name="channel" value="高升专" checked="checked">高升专
+		<input type="radio" name="channel" value="专升本" />专升本
+		<input type="radio" name="channel" value="专本连读" />专本连读
+		<input type="radio" name="channel" value="研究生" />研究生
+		<?php else:?>
+		<input type="radio" name="channel" value="高升专" <?php if($major['ma_channel'] == '高升专') echo 'checked="checked"' ;?> />高升专
+		<input type="radio" name="channel" value="专升本" <?php if($major['ma_channel'] == '专升本') echo 'checked="checked"' ;?> />专升本
+		<input type="radio" name="channel" value="专本连读" <?php if($major['ma_channel'] == '专本连读') echo 'checked="checked"' ;?> />专本连读
+		<input type="radio" name="channel" value="研究生" <?php if($major['ma_channel'] == '研究生') echo 'checked="checked"' ;?> />研究生
+		<?php endif;?>
+	</li>
+	<li>
+		<span>授课形式：</span>
+		<?php if(empty($major)):?>
+		<input type="radio" name="form" value="面授" checked="checked"/>面授
+		<input type="radio" name="form" value="远程" />远程
+		<input type="radio" name="form" value="函授" />函授
+		<?php else:?>
+		<input type="radio" name="form" value="面授" <?php if($major['ma_form'] == '函授') echo 'checked="checked"' ;?>/>面授
+		<input type="radio" name="form" value="远程" <?php if($major['ma_form'] == '远程') echo 'checked="checked"' ;?>/>远程
+		<input type="radio" name="form" value="函授" <?php if($major['ma_form'] == '函授') echo 'checked="checked"' ;?>/>函授
+		<?php endif;?>
+		
+	</li>
+	<li>
+		<span>授课安排：</span>
+		<?php if(empty($major)):?>
+		<input type="radio" name="plan" value="全日制" checked="checked" />全日制
+		<input type="radio" name="plan" value="在职"/>在职
+		<?php else:?>
+		<input type="radio" name="plan" value="全日制" <?php if($major['ma_plan'] == '全日制') echo 'checked="checked"' ;?>/>全日制
+		<input type="radio" name="plan" value="在职" <?php if($major['ma_plan'] == '在职') echo 'checked="checked"' ;?> />在职
+		<?php endif;?>
+	</li>
+	<li>
+		<span>招生对象：</span>
+		<?php if(empty($major)):?>
+			<input type="radio" name="object" value="大专毕业生，无年龄限制" checked="checked"/>大专毕业生，无年龄限制
+			<input type="radio" name="object" value="高中，中专，中职应届毕业生"/>高中，中专，中专应届毕业生
+			<input type="radio" name="object" value="高中，中专，中职毕业生，无年龄限制"/>高中，中专，中职毕业生，无年龄限制
+		<?php else:?>
+			<input type="radio" name="object" value="大专毕业生，无年龄限制" <?php if($major['ma_object'] == '大专毕业生，无年龄限制') echo 'checked="checked"' ;?>/>大专毕业生，无年龄限制
+			<input type="radio" name="object" value="高中，中专，中职应届毕业生" <?php if($major['ma_object'] == '高中，中专，中职应届毕业生') echo 'checked="checked"' ;?>/>高中，中专，中专应届毕业生
+			<input type="radio" name="object" value="高中，中专，中职毕业生，无年龄限制" <?php if($major['ma_object'] == '高中，中专，中职毕业生，无年龄限制') echo 'checked="checked"' ;?>/>高中，中专，中职毕业生，无年龄限制
+		<?php endif;?>
+	</li>
+	<li>
+		<span>开学时间：</span>
+		<?php if(empty($major)):?>
+			<input type="radio" name="start_school" value="即日起，额满即止" checked="checked"/>即日起，额满即止
+			<input type="radio" name="start_school" value="春季入学"/>春季入学
+			<input type="radio" name="start_school" value="秋季入学"/>秋季入学
+			<input type="radio" name="start_school" value=""/>自定义
+		<?php else:?>
+			<input type="radio" name="start_school" value="即日起，额满即止" <?php if($major['ma_start_school'] == '即日起，额满即止') echo 'checked="checked"' ;?>/>即日起，额满即止
+			<input type="radio" name="start_school" value="春季入学" <?php if($major['ma_start_school'] == '春季入学') echo 'checked="checked"' ;?>/>春季入学
+			<input type="radio" name="start_school" value="秋季入学" <?php if($major['ma_start_school'] == '秋季入学') echo 'checked="checked"' ;?>/>秋季入学
+			<input type="radio" name="start_school" value=""/>自定义
+		<?php endif;?>
+	</li>
+	<li>
+		<span>招生数量：</span>
+		<?php if(empty($major)):?>
+			<input type="radio" name="quantity" value="即日起，额满即止" checked="checked"/>即日起，额满即止
+			<input type="radio" name="quantity" value=""/>自定义
+		<?php else:?>
+			<input type="radio" name="quantity" value="即日起，额满即止" <?php if($major['ma_quantity'] == '即日起，额满即止') echo 'checked="checked"' ;?>/>即日起，额满即止
+			<input type="radio" name="quantity" value=""/>自定义
+		<?php endif;?>
+	</li>
+	<li>
+		<span>入学考试：</span>
+		<?php if(empty($major)):?>
+			<input type="radio" name="exam" value="无" checked="checked"/>无
+			<input type="radio" name="exam" value="需要"/>需要
+		<?php else:?>
+			<input type="radio" name="exam" value="无" <?php if($major['ma_exam'] == '无') echo 'checked="checked"' ;?>/>无
+			<input type="radio" name="exam" value="需要" <?php if($major['ma_exam'] == '需要') echo 'checked="checked"' ;?>/>需要
+		<?php endif;?>
+	</li>
+	<li>
+		<span>上课时间：</span>
+		<?php if(empty($major)):?>
+			<input type="radio" name="class_time" value="周末" checked="checked"/>周末
+			<input type="radio" name="class_time" value="周一至周五白天"/>周一至周五白天
+		<?php else:?>
+			<input type="radio" name="class_time" value="周末" <?php if($major['ma_class_time'] == '周末') echo 'checked="checked"' ;?>/>周末
+			<input type="radio" name="class_time" value="周一至周五白天" <?php if($major['ma_class_time'] == '周一至周五白天') echo 'checked="checked"' ;?>/>周一至周五白天
+		<?php endif;?>	
+	</li>
+	<li>
+		<span>校园住宿：</span>
+		<?php if(empty($major)):?>
+			<input type="radio" name="stay" value="无" checked="checked"/>无
+			<input type="radio" name="stay" value="有"/>有
+		<?php else:?>
+			<input type="radio" name="stay" value="无" <?php if($major['ma_stay'] == '无') echo 'checked="checked"' ;?>/>无
+			<input type="radio" name="stay" value="有" <?php if($major['ma_stay'] == '有') echo 'checked="checked"' ;?>/>有
+		<?php endif;?>
+	</li>
+	<li>
+		<span>前端标签：</span>
+		<?php if(empty($major)):?>
+			<input type="text" name="tag" value="" />
+		<?php else:?>
+			<input type="text" name="tag" value="<?php echo $major['ma_tag'];?>" />
+		<?php endif;?>
+	</li>
+	<li>
+		<span>排&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;序：</span>
+		<input type="text" name="sort" placeholder="" value="0">
+	</li>
+	<li>
+		<span>上架时间：</span>
+		<?php if(empty($major)):?>
+			<input type="text" name="start" placeholder="例：2017-07-23 12:40">-
+			<input type="text" name="end" placeholder="例：2017-07-25 12:40">
+		<?php else:?>
+			<input type="text" name="start" placeholder="例：2017-07-23 12:40" value="<?php echo date('Y-m-d H:i',$major['ma_start']);?>">-
+			<input type="text" name="end" placeholder="例：2017-07-25 12:40" value="<?php echo date('Y-m-d H:i',$major['ma_end']);?>">
+		<?php endif;?>
+	</li>
+	<li>
+		<span>显示状态：</span>
+		<?php if(empty($major)):?>
+			<input type="radio" name="state" value="1">上架
+			<input type="radio" name="state" value="0" checked="checked" >下架
+		<?php else:?>
+			<input type="radio" name="state" value="1" <?php if($major['ma_state'] == 1) echo 'checked="checked"' ;?>>上架
+			<input type="radio" name="state" value="0" <?php if($major['ma_state'] == 0) echo 'checked="checked"' ;?> >下架
+		<?php endif;?>
+		
+	</li>
+	<li>
+		<input id="submit" type="button" name="" value="保存">
+	</li>
+	</form>
+</ul>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	
+</script>
+{/block}

@@ -3,18 +3,21 @@ namespace app\admin\controller;
 use think\Db;
 use think\Validate;
 
-class College extends Base
+class Major extends Base
 {
 	/**
 	 * 列表
 	 */
     public function list()
     {
-        $schoolId = input('param.school/d');
-        $schoolList = model('College')->getCollegeListBySchoolId($schoolId);
+        $collegeId  = input('param.college/d');
+        if($collegeId <= 0){
+            redirect('/college/list');
+        }
+        $majorList = model('Major')->getMajorListByCollegeId($collegeId);
         return $this->fetch('list',array(
-            'schoolId'   => $schoolId,
-            'schoolList' => $schoolList
+            'collegeId' => $collegeId,
+            'majorList' => $majorList
         ));
     }
 
@@ -23,50 +26,73 @@ class College extends Base
      */
     public function edit()
     {
-        $schoolId = input('param.school/d');
-        $school   = model('School')->getSchoolById($schoolId);
-        $province = model('Citybook')->getItemsByLevel(1);
-    	if(request()->isGet()){
-    		return view('edit',array(
-                'province' => $province,
-                'school' => $school,
-            ));
-    	}
-        $aid = input('param.addr_aid/d');
-        $fulArea = model('Citybook')->getFulAraeByAid($aid);
-        $data = array(
-            'sc_name'  => input('param.name/s'),
-            'sc_english'  => input('param.english/s'),
-            'sc_nature'   => input('param.nature/s'),
-            'sc_person'   => input('param.person/s'),
-            'sc_addr_aid' => $fulArea['item_a']['cb_id'],
-            'sc_addr_cid' => $fulArea['item_c']['cb_id'],
-            'sc_addr_pid' => $fulArea['item_p']['cb_id'],
-            'sc_addr_ful' => $fulArea['ful'],
-            'sc_addr_street'   => input('param.addr_street/s'),
-            'sc_person_tel'    => input('param.person_tel/s'),
-            'sc_introduction'  => input('param.introduction/s'),
-            'sc_sort'  => input('param.sort/d'),
-            'sc_start' => input('param.start/d'),
-            'sc_end'   => input('param.end/d'),
-            'sc_state' => input('param.state/d'),
-        );	
+        $id = input('param.id/d');
+        if($id > 0){
+            $major = model('Major')->getMajorById($id);
+            $collegeId = $major['ma_college'];
+        }else{
+            $major = [];
+            $collegeId = input('param.college/d');
+        }
+        
+        $college   = model('College')->getCollegeById($collegeId);
+    	$school    = model('School')->getSchoolById($college['co_school']);
+        return view('edit',array(
+            'major'    => $major,
+            'college'  => $college,
+            'school'   => $school,
+        ));       
+    }
 
-        $result = $this->validate($data,'School.create');
+    public function ajax_edit()
+    {
+        $id = input('param.id/d');
+        if($id > 0){
+            $major = model('Major')->getMajorById($id);
+            $collegeId = $major['ma_college'];
+        }else{
+            $major = [];
+            $collegeId = input('param.college/d');
+        }
+        $college   = model('College')->getCollegeById($collegeId);
+        $data = array(
+            'ma_school'  => $college['co_school'],
+            'ma_college' => $college['co_id'],
+            'ma_name'    => input('param.name/s'),
+            'ma_introduction' => input('param.introduction/s'),
+            'ma_institution'  => input('param.institution/s'),
+            'ma_class_time'   => input('param.class_time/s'),
+            'ma_start_school' => input('param.start_school/s'),
+            'ma_stay'     => input('param.stay/s'),
+            'ma_plan'     => input('param.plan/s'),
+            'ma_form'     => input('param.form/s'),
+            'ma_exam'     => input('param.exam/s'),
+            'ma_object'   => input('param.object/s'),
+            'ma_channel'  => input('param.channel/s'),
+            'ma_tuition'  => input('param.tuition/s'),
+            'ma_quantity' => input('param.quantity/s'),
+            'ma_start' => input('param.start/d'),
+            'ma_end'   => input('param.end/d'),
+            'ma_state' => input('param.state/d'),
+            'ma_tag'   => 'number',
+            'ma_sort'  => input('param.sort/d'),
+        );
+
+        $result = $this->validate($data,'Major.create');
         if(true !== $result){
             return json(array(
                 'code'  => 206,
                 'error' => $result
             ));
         }
-        $id = Db::name('school')->insertGetId($data);
         if($id > 0){
-            redirect('/');
+            $res = Db::name('major')->where('ma_id',$id)->update($data);
+        }else{
+            $res = Db::name('major')->insertGetId($data);
         }
-    }
-
-    public function college_list()
-    {
-        return view();
+        return json(array(
+            'code'  => 200,
+            'result' => 'ok'
+        ));
     }
 }

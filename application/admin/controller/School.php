@@ -19,14 +19,23 @@ class School extends Base
     /**
      * 创建
      */
-    public function create()
+    public function edit()
     {
+        $id = input('param.id/d');
+        if($id > 0){
+            $school = model('School')->getSchoolById($id);
+        }else{
+            $school = [];
+        }
         $province = model('Citybook')->getItemsByLevel(1);
-    	if(request()->isGet()){
-    		return view('create',array(
-                'province' => $province,
-            ));
-    	}
+    	return view('edit',array(
+            'province' => $province,
+            'school'   => $school,
+        ));
+    }
+
+    public function ajax_edit()
+    {
         $aid = input('param.addr_aid/d');
         $fulArea = model('Citybook')->getFulAraeByAid($aid);
         $data = array(
@@ -45,7 +54,7 @@ class School extends Base
             'sc_start' => input('param.start/d'),
             'sc_end'   => input('param.end/d'),
             'sc_state' => input('param.state/d'),
-        );	
+        );  
 
         $result = $this->validate($data,'School.create');
         if(true !== $result){
@@ -58,10 +67,5 @@ class School extends Base
         if($id > 0){
             redirect('/');
         }
-    }
-
-    public function college_list()
-    {
-        return view();
     }
 }

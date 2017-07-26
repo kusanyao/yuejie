@@ -11,10 +11,13 @@ class College extends Base
     public function list()
     {
         $schoolId = input('param.school/d');
-        $schoolList = model('College')->getCollegeListBySchoolId($schoolId);
+        if($schoolId <= 0){
+            redirect('/school/list');
+        }
+        $collegeList = model('College')->getCollegeListBySchoolId($schoolId);
         return $this->fetch('list',array(
             'schoolId'   => $schoolId,
-            'schoolList' => $schoolList
+            'collegeList' => $collegeList
         ));
     }
 

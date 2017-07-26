@@ -1,0 +1,61 @@
+{extend name="public/base" /}
+{block name="css"}
+<style type="text/css">
+
+</style>
+{/block}
+{block name="right"}
+<div class="crumbs">
+	专业列表
+</div>
+<div class="list_option">
+	<a href="/major/edit?college=<?php echo $collegeId;?>">创建专业</a>
+</div>
+<table align="center">
+	<thead>
+		<tr align="center">
+			<td>专业缩略图</td>
+			<td width="150px">专业名称</td>
+			<td>学费</td>
+			<td width="150px">访问量</td>
+			<td>授课安排</td>
+			<td>授课形式</td>
+			<td>科段支持</td>
+			<td width="150px">创建时间</td>
+			<td width="100px">对比事件</td>
+			<td>状态</td>
+			<td width="180px">有效期</td>
+			<td>排序</td>
+			<td>操作</td>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($majorList as $major):?>
+		<tr align="center">
+			<td><img src="/"></td>
+			<td><?php echo $major['ma_name'];?></td>
+			<td><?php echo $major['ma_tuition'];?></td>
+			<td>
+				<p>访客数：32</p>
+				<p>浏览量：45</p>
+			</td>
+			<td><?php echo $major['ma_plan'];?></td>
+			<td><?php echo $major['ma_form'];?></td>
+			<td><?php echo $major['ma_channel'];?></td>
+			<td><?php echo date('Y-m-d H:i',$major['ma_create']);?></td>
+			<td>12</td>
+			<td><?php echo $major['ma_state'] ? '上架' : '下架';?></td>
+			<td>
+				<p><?php echo date('Y-m-d H:i',$major['ma_start']);?></p>
+				<p>至</p>
+				<p><?php echo date('Y-m-d H:i',$major['ma_end']);?></p>
+			</td>
+			<td><?php echo $major['ma_sort'];?></td>
+			<td>
+				<a href="/major/edit?id=<?php echo $major['ma_id'];?>">编辑</a>
+			</td>
+		</tr>
+		<?php endforeach;?>
+	</tbody>
+</table>
+{/block}
