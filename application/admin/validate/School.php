@@ -6,10 +6,11 @@ use think\Validate;
 class School extends Validate
 {
     protected $rule = [
-	    'sc_name' => 'require|length:4,25',
+    	'sc_id'   => 'number',
+	    'sc_name' => 'require|length:4,25|checkName',
 		'sc_english' => 'require|length:4,25',
 		'sc_introduction' => 'require|length:4,25',
-		'sc_nature' => 'require|length:3,6',
+		'sc_nature' => 'require|length:2,6',
 		'sc_addr_pid' => 'require',
 		'sc_addr_cid' => 'require',
 		'sc_addr_aid' => 'require',
@@ -36,4 +37,14 @@ class School extends Validate
         'edit'   => ['name','age'],
     ];
 
+    // 自定义验证规则
+    protected function checkName($value,$rule,$data)
+    {
+    	$school = model('School')->getSchoolByName($value);
+    	if( empty($school) || $school['sc_id'] == $data['sc_id'] ){
+    		return true;
+    	}else{
+    		return $value.'已经存在';
+    	}
+    }
 }

@@ -5,19 +5,36 @@
 </div>
 <ul class="edit_from">
 <form id="edit_from" method="post">
-	<li>高校名称：<input type="text" name="name"></li>
-	<li>英文名称：<input type="text" name="english"></li>
-	<li>成立年份：<input type="text" name="year"></li>
 	<li>
-		学校介绍：
-		<textarea name="introduction"></textarea>
+		<span>高校名称：</span>
+		<input type="hidden" name="id" value="<?php if($school) echo $school['sc_id'];?>">
+		<input type="text" name="name" value="<?php if($school) echo $school['sc_name'];?>">
+	</li>
+	<li>
+		<span>英文名称：</span>
+		<input type="text" name="english" value="<?php if($school) echo $school['sc_english'];?>">
+	</li>
+	<li>
+		<span>成立年份：</span>
+		<input type="text" name="year" value="<?php if($school) echo $school['sc_year'];?>">
+	</li>
+	<li>
+		<span>学校介绍：</span>
+		<textarea name="introduction"><?php if($school) echo $school['sc_introduction'];?></textarea>
 	</li>
 	<li>
 		高校性质：
-		<input type="radio" name="nature" value="985">985
-		<input type="radio" name="nature" value="211">211
-		<input type="radio" name="nature" value="2011">2011
-		<input type="radio" name="nature" value="普通">普通
+		<?php if(!$school):?>
+			<input type="radio" name="nature" value="985" >985
+			<input type="radio" name="nature" value="211">211
+			<input type="radio" name="nature" value="2011">2011
+			<input type="radio" name="nature" value="普通" checked="checked">普通
+		<?php else:?>
+			<input type="radio" name="nature" value="985" <?php if($school['sc_nature'] == '985') echo 'checked="checked"';?>>985
+			<input type="radio" name="nature" value="211" <?php if($school['sc_nature'] == '211') echo 'checked="checked"';?>>211
+			<input type="radio" name="nature" value="2011" <?php if($school['sc_nature'] == '2011') echo 'checked="checked"';?>>2011
+			<input type="radio" name="nature" value="普通" <?php if($school['sc_nature'] == '普通') echo 'checked="checked"';?>>普通
+		<?php endif;?>
 	</li>
 	<li>
 		高校大图：
@@ -28,38 +45,49 @@
 		<select class="area_select" data-area-level="1">
 			<option>选择省份</option>
 			<?php foreach($province as $v):?>
-				<option value="<?php echo $v['cb_id'];?>"><?php echo $v['cb_area']?></option>
+				<option value="<?php echo $v['cb_id'];?>" <?php if($school && $school['sc_addr_pid'] == $v['cb_id']) echo 'selected="selected"';?>><?php echo $v['cb_area']?></option>
 			<?php endforeach;?>
 		</select>
 		<select class="area_select" data-area-level="2">
 			<option>选择城市</option>
+			<?php foreach($city as $v):?>
+				<option value="<?php echo $v['cb_id'];?>" <?php if($school && $school['sc_addr_cid'] == $v['cb_id']) echo 'selected="selected"';?>><?php echo $v['cb_area']?></option>
+			<?php endforeach;?>
 		</select>
 		<select class="area_select" data-area-level="3" name="addr_aid">
 			<option>选择地区</option>
+			<?php foreach($area as $v):?>
+				<option value="<?php echo $v['cb_id'];?>" <?php if($school && $school['sc_addr_aid'] == $v['cb_id']) echo 'selected="selected"';?>><?php echo $v['cb_area']?></option>
+			<?php endforeach;?>
 		</select>
-		<input type="" name="addr_street" placeholder="请填写具体地址">
+		<input type="" name="addr_street" placeholder="请填写具体地址" value="<?php if($school) echo $school['sc_addr_street'];?>">
 	</li>
 	<li>
 		对接人：
-		<input type="text" name="person" placeholder="姓名">
-		<input type="text" name="person_tel" placeholder="电话">
+		<input type="text" name="person" value="<?php if($school) echo $school['sc_person'];?>" placeholder="姓名">
+		<input type="text" name="person_tel" value="<?php echo $school?$school['sc_person_tel']:'';?>" placeholder="电话">
 	</li>
 	<li>
 		排序：
-		<input type="text" name="sort" placeholder="">
+		<input type="text" name="sort" placeholder="" value="<?php echo $school?$school['sc_sort']:0;?>">
 	</li>
 	<li>
 		上架时间：
-		<input type="text" name="start" placeholder="">-
-		<input type="text" name="end" placeholder="">
+		<input type="text" name="start" placeholder="" value="<?php echo $school?date('Y-m-d H:i',$school['sc_start']):'';?>">-
+		<input type="text" name="end" placeholder="" value="<?php echo $school?date('Y-m-d H:i',$school['sc_end']):'';?>">
 	</li>
 	<li>
 		显示状态：
-		<input type="radio" name="state" value="1">上架
-		<input type="radio" name="state" value="0">下架
+		<?php if(!$school):?>
+			<input type="radio" name="state" value="1">上架
+			<input type="radio" name="state" value="0" checked="checked">下架
+		<?php else:?>
+			<input type="radio" name="state" value="1" <?php if($school['sc_state'] == 1) echo 'checked="checked"';?>>上架
+			<input type="radio" name="state" value="0" <?php if($school['sc_state'] == 0) echo 'checked="checked"';?>>下架
+		<?php endif;?>
 	</li>
 	<li>
-		<input id="edit_submit" type="button" name="" value="保存" data-url="/school/ajax_edit" data-type="" >
+		<input id="edit_submit" type="button" name="" value="保存" data-url="/school/ajax_edit">
 	</li>
 	</form>
 </ul>

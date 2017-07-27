@@ -7,7 +7,7 @@ class College extends Validate
 {
     protected $rule = [
     	'co_school' => 'require|number',
-	    'co_name'   => 'require|length:4,25',
+	    'co_name'   => 'require|length:4,25|checkName',
 	    'co_year'   => 'require|number|length:4',
 		'co_introduction' => 'require|length:4,25',
 		'co_addr_pid'    => 'require',
@@ -33,5 +33,14 @@ class College extends Validate
         'create' => [],
         'edit'   => ['name','age'],
     ];
-
+    // 自定义验证规则
+    protected function checkName($value,$rule,$data)
+    {
+    	$college = model('College')->getCollegeByName($data['co_school'],$value);
+    	if( empty($college) || $college['co_id'] == $data['co_id'] ){
+    		return true;
+    	}else{
+    		return $value.'已经存在';
+    	}
+    }
 }

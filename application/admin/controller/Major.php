@@ -41,7 +41,7 @@ class Major extends Base
             'major'    => $major,
             'college'  => $college,
             'school'   => $school,
-        ));       
+        ));
     }
 
     public function ajax_edit()
@@ -50,14 +50,15 @@ class Major extends Base
         if($id > 0){
             $major = model('Major')->getMajorById($id);
             $collegeId = $major['ma_college'];
+            $schoolId  = $major['ma_school'];
         }else{
-            $major = [];
             $collegeId = input('param.college/d');
+            $college = model('College')->getCollegeById($collegeId);
+            $schoolId  = $college['co_school'];
         }
-        $college   = model('College')->getCollegeById($collegeId);
         $data = array(
-            'ma_school'  => $college['co_school'],
-            'ma_college' => $college['co_id'],
+            'ma_school'  => $schoolId,
+            'ma_college' => $collegeId,
             'ma_name'    => input('param.name/s'),
             'ma_introduction' => input('param.introduction/s'),
             'ma_institution'  => input('param.institution/s'),
@@ -72,8 +73,8 @@ class Major extends Base
             'ma_tuition'  => input('param.tuition/s'),
             'ma_quantity' => input('param.quantity/s'),
             'ma_start' => input('param.start/d'),
-            'ma_end'   => input('param.end/d'),
-            'ma_state' => input('param.state/d'),
+            'sc_start' => strtotime(input('param.start/s')),
+            'sc_end'   => strtotime(input('param.end/s')),
             'ma_tag'   => 'number',
             'ma_sort'  => input('param.sort/d'),
         );
@@ -88,6 +89,7 @@ class Major extends Base
         if($id > 0){
             $res = Db::name('major')->where('ma_id',$id)->update($data);
         }else{
+            $data['ma_create'] = time();
             $res = Db::name('major')->insertGetId($data);
         }
         return json(array(

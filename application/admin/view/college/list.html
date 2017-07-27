@@ -11,7 +11,7 @@
 	学院列表
 </div>
 <div class="list_option">
-	<a href="/college/edit?college=<?php echo $schoolId;?>">创建学院</a>
+	<a href="/college/edit?school=<?php echo $schoolId;?>">创建学院</a>
 </div>
 <table>
 	<thead>
@@ -31,14 +31,19 @@
 	<tbody>
 		<?php foreach($collegeList as $college):?>
 		<tr style="">
-			<td><img src=""></td>
+			<td><img src="/"></td>
 			<td><?php echo $college['co_name'];?></td>
 			<td>
 				<p>访客数：</p>
 				<p>浏览量：</p>
 			</td>
-			<td></td>
-			<td></td>
+			<td><?php echo $college['majorCount'];?></td>
+			<td>
+				<p><?php echo $college['co_channel_a']?'高升专':'';?></p>
+				<p><?php echo $college['co_channel_b']?'专升本':'';?></p>
+				<p><?php echo $college['co_channel_c']?'专本连读':'';?></p>
+				<p><?php echo $college['co_channel_d']?'研究生':'';?></p>
+			</td>
 			<td><?php echo date('Y-m-d H:i',$college['co_create']);?></td>
 			<td><?php echo $college['co_state'] ? '上架' : '下架';?></td>
 			<td>
@@ -48,7 +53,7 @@
 			</td>
 			<td><?php echo $college['co_sort'];?></td>
 			<td>
-				<a href="#">编辑</a>
+				<a href="/college/edit?id=<?php echo $college['co_id'];?>">编辑</a>
 				<a href="/major/list?college=<?php echo $college['co_id'];?>">专业管理</a>
 			</td>
 		</tr>

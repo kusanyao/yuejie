@@ -15,6 +15,23 @@ class Major
 		return $result;
 	}
 
+	public function getMajorByName($collegeId,$name)
+	{
+		$result = Db::name('Major')->where(array(
+			'ma_college' => $collegeId,
+			'ma_name'    => $name
+		))->find();
+		return $result;
+	}
+
+	public function getMajorCountByCollegeId($collegeId)
+	{
+		$result = Db::name('Major')->where(array(
+			'ma_college' => $collegeId
+		))->count();
+		return $result;
+	}
+
 	/**
 	 * 根据学院id查专业列表
 	 */
