@@ -8,7 +8,7 @@ class Major extends Validate
     protected $rule = [
     	'ma_school'  => 'require|number',
 	    'ma_college' => 'require|number',
-	    'ma_name'    => 'require',
+	    'ma_name'    => 'require|length:4,255|checkName',
 	    'ma_introduction' => 'require|length:4,255',
 		'ma_institution'  => 'require|length:2,25',
 		'ma_stay'    => 'require',
@@ -37,5 +37,16 @@ class Major extends Validate
         'create' => [],
         'edit'   => ['name','age'],
     ];
+
+    // 自定义验证规则
+    protected function checkName($value,$rule,$data)
+    {
+    	$major = model('Major')->getMajorByName($data['ma_college'],$value);
+    	if( empty($major) || $major['ma_id'] == $data['ma_id'] ){
+    		return true;
+    	}else{
+    		return $value.'已经存在';
+    	}
+    }
 
 }

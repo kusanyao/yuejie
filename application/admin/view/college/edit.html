@@ -12,7 +12,7 @@
 	</li>
 	<li>
 		<span>学院名称：</span>
-		<input type="hidden" name="id" value="<?php echo $college['co_id'];?>">
+		<input type="hidden" name="id" value="<?php echo $college?$college['co_id']:'';?>">
 		<input type="text" name="name" value="<?php echo $college?$college['co_name']:'';?>" />
 	</li>
 	<li>
@@ -31,10 +31,15 @@
 		<input type="checkbox" name="channel_d" value="1" <?php echo ($college&&$college['co_channel_d'])?'checked="checked"':'';?>>研究生
 	</li>
 	<li>
-		<span>高校大图：</span>
-		<input type="text" name="images">
+		<span class="fl">学院大图：</span>
+		<?php foreach($collegeThumb as $v):?>
+			<div class="show_img fl"><img src="<?php echo '/uploads/'.$v['ch_path'];?>"></div>;
+		<?php endforeach;?>
+		<div class="select_file fl">+</div>		
+		<input id="inputfile" type="file" data-type="college_thumb" data-business="<?php echo $college?$college['co_id']:'';?>">
+		<input type="hidden" name="college_thumb">
 	</li>
-	<li>
+	<li class="clear">
 		<span>联系地址：</span>
 		<select class="area_select" data-area-level="1">
 			<option>选择省份</option>
@@ -67,8 +72,8 @@
 	</li>
 	<li>
 		<span>上架时间：</span>
-		<input type="text" name="start" placeholder="" value="<?php echo $college?date('Y-m-d H:i',$college['co_start']):'';?>">-
-		<input type="text" name="end" placeholder="" value="<?php echo $college?date('Y-m-d H:i',$college['co_end']):'';?>">
+		<input type="text" name="start" placeholder="例：2017-07-23 12:40" value="<?php echo $college?date('Y-m-d H:i',$college['co_start']):'';?>">-
+		<input type="text" name="end" placeholder="例：2017-07-23 12:40" value="<?php echo $college?date('Y-m-d H:i',$college['co_end']):'';?>">
 	</li>
 	<li>
 		<span>显示状态：</span>

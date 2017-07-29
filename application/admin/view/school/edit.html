@@ -23,7 +23,7 @@
 		<textarea name="introduction"><?php if($school) echo $school['sc_introduction'];?></textarea>
 	</li>
 	<li>
-		高校性质：
+		<span>高校性质：</span>
 		<?php if(!$school):?>
 			<input type="radio" name="nature" value="985" >985
 			<input type="radio" name="nature" value="211">211
@@ -37,10 +37,15 @@
 		<?php endif;?>
 	</li>
 	<li>
-		高校大图：
-		<input type="text" name="images">
+		<span class="fl">高校大图：</span>
+		<?php foreach($schoolThumb as $v):?>
+			<div class="show_img fl"><img src="<?php echo '/uploads/'.$v['st_path'];?>"></div>;
+		<?php endforeach;?>
+		<div class="select_file fl">+</div>		
+		<input id="inputfile" type="file" data-type="school_thumb" data-business="<?php echo $school?$school['sc_id']:'';?>">
+		<input type="hidden" name="school_thumb">
 	</li>
-	<li>
+	<li class="clear">
 		联系地址：
 		<select class="area_select" data-area-level="1">
 			<option>选择省份</option>
@@ -69,12 +74,12 @@
 	</li>
 	<li>
 		排序：
-		<input type="text" name="sort" placeholder="" value="<?php echo $school?$school['sc_sort']:0;?>">
+		<input type="text" name="sort" placeholder="0" value="<?php echo $school?$school['sc_sort']:0;?>">
 	</li>
 	<li>
 		上架时间：
-		<input type="text" name="start" placeholder="" value="<?php echo $school?date('Y-m-d H:i',$school['sc_start']):'';?>">-
-		<input type="text" name="end" placeholder="" value="<?php echo $school?date('Y-m-d H:i',$school['sc_end']):'';?>">
+		<input type="text" name="start" placeholder="例：2017-07-23 12:40" value="<?php echo $school?date('Y-m-d H:i',$school['sc_start']):'';?>">-
+		<input type="text" name="end" placeholder="例：2017-07-23 12:40" value="<?php echo $school?date('Y-m-d H:i',$school['sc_end']):'';?>">
 	</li>
 	<li>
 		显示状态：

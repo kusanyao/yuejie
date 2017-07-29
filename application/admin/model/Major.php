@@ -15,6 +15,20 @@ class Major
 		return $result;
 	}
 
+	/**
+	 * 根据id查专业
+	 */
+	public function getMajorDealById($id)
+	{
+		$result = Db::name('major_deal')->where(array(
+			'md_id' => $id,
+		))->find();
+		return $result;
+	}
+
+	/**
+	 * 根据专业名称查找专业
+	 */
 	public function getMajorByName($collegeId,$name)
 	{
 		$result = Db::name('Major')->where(array(
@@ -24,6 +38,9 @@ class Major
 		return $result;
 	}
 
+	/**
+	 * 根据学院id获取专业数量
+	 */
 	public function getMajorCountByCollegeId($collegeId)
 	{
 		$result = Db::name('Major')->where(array(
@@ -44,10 +61,24 @@ class Major
 	}
 
 	/**
-	 * 添加专业数据
+	 * 根据专业id查专业的图片
 	 */
-	public function add($data)
+	public function getThumbArrByMajorId($majorId)
 	{
-		
+		$result = Db::name('major_thumb')->where(array(
+			'mh_major' => $majorId,
+		))->select();
+		return $result;
+	}
+
+	/**
+	 * 获取单个路径
+	 */
+	public function getThumbByMajorId($majorId)
+	{
+		$result = Db::name('major_thumb')->where(array(
+			'mh_major' => $majorId,
+		))->find();
+		return $result;
 	}
 }

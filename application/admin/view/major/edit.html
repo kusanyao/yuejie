@@ -16,8 +16,11 @@
 	</li>
 	<li>
 		<span>专业名称：</span>
-		<input type="hidden" name="id" value="<?php echo isset($major['ma_id'])?$major['ma_id']:'';?>">
-		<input type="text" name="name" value="<?php echo isset($major['ma_name'])?$major['ma_name']:'';?>">
+		<input type="hidden" name="id" value="<?php echo $major?$major['ma_id']:'';?>">
+		<input type="text" name="name" value="<?php echo $major?$major['ma_name']:'';?>">
+		<?php if($major):?>
+		<a href="/major/edit_deal?id=<?php echo $major['ma_id'];?>">编辑专业详情</a>
+		<?php endif;?>
 	</li>
 	<li>
 		<span>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费：</span>
@@ -32,10 +35,15 @@
 		<textarea name="introduction" placeholder="该文案显示在专详（在标题栏下方做专业详细介绍）"><?php echo isset($major['ma_introduction'])?$major['ma_introduction']:'';?></textarea>
 	</li>	
 	<li>
-		<span>专业大图：</span>
-		<input type="file" name="images">
+		<span class="fl">专业大图：</span>
+		<?php foreach($majorThumb as $v):?>
+			<div class="show_img fl"><img src="<?php echo '/uploads/'.$v['mh_path'];?>"></div>
+		<?php endforeach;?>
+		<div class="select_file fl">+</div>		
+		<input id="inputfile" type="file" data-type="major_thum" data-business="<?php echo $major?$major['ma_id']:'';?>">
+		<input type="hidden" name="major_thum">
 	</li>
-	<li>
+	<li class="clear">
 		<span>科段支持：</span>
 		<?php if(empty($major)):?>
 		<input type="radio" name="channel" value="高升专" checked="checked">高升专
@@ -173,6 +181,7 @@
 	</li>
 	<li>
 		<input id="edit_submit" type="button" name="" value="保存" data-url="/major/ajax_edit">
+		<input id="edit_deal" type="button" name="" value="编辑专业详情" data-url="/major/ajax_edit">
 	</li>
 	</form>
 </ul>

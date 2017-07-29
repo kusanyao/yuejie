@@ -29,11 +29,12 @@ class College extends Base
         $id = input('param.id/d');
         if($id > 0){
             $college  = model('College')->getCollegeById($id);
+            $collegeThumb = model('College')->getThumbArrByCollegeId($id);
             $schoolId = $college['co_school'];
             $city   = model('Citybook')->getItemsByPid($college['co_addr_pid']);
             $area   = model('Citybook')->getItemsByPid($college['co_addr_cid']);
         }else{
-            $college = [];
+            $college = $collegeThumb = $city = $area = [];
             $schoolId = input('param.school/d');
         }
         $school   = model('School')->getSchoolById($schoolId);
@@ -43,6 +44,7 @@ class College extends Base
             'city'     => $city,
             'area'     => $area,
             'school'   => $school,
+            'collegeThumb' => $collegeThumb,
             'college'  => $college
         ));
     }
@@ -55,6 +57,26 @@ class College extends Base
             $schoolId = $college['co_school'];
         }else{
             $schoolId = input('param.school/d');
+            $collegeThumbStr = input('param.college_thumb/s');
+            if(empty($collegeThumbStr)){
+                return json(array(
+                    'code'  => 206,
+                    'error' => '专业缩略图不能为空'
+                ));
+            }
+            $collegeThumbArr = json_decode($collegeThumbStr,true);
+            if(empty($collegeThumbArr)){
+                return json(array(
+                    'code'  => 207,
+                    'error' => '专业缩略图不能为空'
+                ));
+            }
+            if(empty($collegeThumbArr)){
+                return json(array(
+                    'code'  => 207,
+                    'error' => '专业缩略图不能为空'
+                ));
+            }
         }
         $aid = input('param.addr_aid/d');
         $fulArea = model('Citybook')->getFulAraeByAid($aid);
@@ -91,8 +113,7 @@ class College extends Base
         if($id > 0){
             $result = model('College')->mdfCollegeById($id,$data);
         }else{
-            $data['co_create'] = time();
-            $result = Db::name('college')->insertGetId($data);
+            $result = model('College','logic')->addCollege($data,$collegeThumbArr);
         }
         if($result){
             return json(array(

@@ -10,7 +10,7 @@ class School extends Base
 	 */
     public function list()
     {
-        $schoolList = model('School')->getSchoolList();
+        $schoolList = model('School','logic')->getSchoolList();
         return $this->fetch('list',array(
             'schoolList' => $schoolList
         ));
@@ -24,10 +24,11 @@ class School extends Base
         $id = input('param.id/d');
         if($id > 0){
             $school = model('School')->getSchoolById($id);
+            $schoolThumb = model('School')->getThumbArrBySchoolId($id);
             $city   = model('Citybook')->getItemsByPid($school['sc_addr_pid']);
             $area   = model('Citybook')->getItemsByPid($school['sc_addr_cid']);
         }else{
-            $school = $city = $area = [];
+            $school = $city = $area = $schoolThumb = [];
         }
         $province = model('Citybook')->getItemsByLevel(1);
     	return view('edit',array(
@@ -35,6 +36,7 @@ class School extends Base
             'city'     => $city,
             'area'     => $area,
             'school'   => $school,
+            'schoolThumb' => $schoolThumb
         ));
     }
 
@@ -72,8 +74,27 @@ class School extends Base
         if($id > 0){
             $result = model('School')->mdfSchoolById($id,$data);
         }else{
-            $data['sc_create'] = time();
-            $result = Db::name('school')->insertGetId($data);
+            $schoolThumbStr = input('param.school_thumb/s');
+            if(empty($schoolThumbStr)){
+                return json(array(
+                    'code'  => 206,
+                    'error' => '专业缩略图不能为空'
+                ));
+            }
+            $schoolThumbArr = json_decode($schoolThumbStr,true);
+            if(empty($schoolThumbArr)){
+                return json(array(
+                    'code'  => 207,
+                    'error' => '专业缩略图不能为空'
+                ));
+            }
+            if(empty($schoolThumbArr)){
+                return json(array(
+                    'code'  => 207,
+                    'error' => '专业缩略图不能为空'
+                ));
+            }
+            $result = model('School','logic')->addSchool($data,$schoolThumbArr);
         }
         if($result){
             return json(array(

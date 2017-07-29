@@ -14,7 +14,7 @@ class Major extends Base
         if($collegeId <= 0){
             redirect('/college/list');
         }
-        $majorList = model('Major')->getMajorListByCollegeId($collegeId);
+        $majorList = model('Major','logic')->getMajorListByCollegeId($collegeId);
         return $this->fetch('list',array(
             'collegeId' => $collegeId,
             'majorList' => $majorList
@@ -28,19 +28,24 @@ class Major extends Base
     {
         $id = input('param.id/d');
         if($id > 0){
-            $major = model('Major')->getMajorById($id);
+            $major     = model('Major')->getMajorById($id);
+            if(empty($major)){
+                return redirect('/');
+            }
+            $majorThumb = model('Major')->getThumbArrByMajorId($id);
             $collegeId = $major['ma_college'];
         }else{
-            $major = [];
+            $major = $majorThumb = [];
             $collegeId = input('param.college/d');
         }
         
         $college   = model('College')->getCollegeById($collegeId);
     	$school    = model('School')->getSchoolById($college['co_school']);
         return view('edit',array(
-            'major'    => $major,
-            'college'  => $college,
-            'school'   => $school,
+            'major'     => $major,
+            'college'   => $college,
+            'majorThumb' => $majorThumb,
+            'school'    => $school,
         ));
     }
 
@@ -53,10 +58,31 @@ class Major extends Base
             $schoolId  = $major['ma_school'];
         }else{
             $collegeId = input('param.college/d');
+            $majorThumbStr = input('param.major_thumb/s');
+            if(empty($majorThumbStr)){
+                return json(array(
+                    'code'  => 206,
+                    'error' => '专业缩略图不能为空'
+                ));
+            }
+            $majorThumbArr = json_decode($majorThumbStr,true);
+            if(empty($majorThumbArr)){
+                return json(array(
+                    'code'  => 207,
+                    'error' => '专业缩略图不能为空'
+                ));
+            }
+            if(empty($majorThumbArr)){
+                return json(array(
+                    'code'  => 207,
+                    'error' => '专业缩略图不能为空'
+                ));
+            }
             $college = model('College')->getCollegeById($collegeId);
             $schoolId  = $college['co_school'];
         }
         $data = array(
+            'ma_id'  => $id,
             'ma_school'  => $schoolId,
             'ma_college' => $collegeId,
             'ma_name'    => input('param.name/s'),
@@ -73,9 +99,9 @@ class Major extends Base
             'ma_tuition'  => input('param.tuition/s'),
             'ma_quantity' => input('param.quantity/s'),
             'ma_start' => input('param.start/d'),
-            'sc_start' => strtotime(input('param.start/s')),
-            'sc_end'   => strtotime(input('param.end/s')),
-            'ma_tag'   => 'number',
+            'ma_start' => strtotime(input('param.start/s')),
+            'ma_end'   => strtotime(input('param.end/s')),
+            'ma_tag'   => input('param.tag/s'),
             'ma_sort'  => input('param.sort/d'),
         );
 
@@ -88,13 +114,76 @@ class Major extends Base
         }
         if($id > 0){
             $res = Db::name('major')->where('ma_id',$id)->update($data);
+            $res = $id;
         }else{
-            $data['ma_create'] = time();
-            $res = Db::name('major')->insertGetId($data);
+            $res = model('Major','logic')->addMajor($data,$majorThumbArr);
         }
         return json(array(
             'code'  => 200,
-            'result' => 'ok'
+            'result' => array(
+                'id' => $res,
+            )
+        ));
+    }
+
+    public function edit_deal()
+    {
+        $id = input('param.id/d');
+        $majorModel = model('Major');
+        $major = $majorModel->getMajorById($id);
+        if(empty($major)){
+            return redirect('/');
+        }
+        $deal  = $majorModel->getMajorDealById($id);
+        $college   = model('College')->getCollegeById($major['ma_college']);
+        $school    = model('School')->getSchoolById($major['ma_school']);
+        return view('edit_deal',array(
+            'school'  => $school,
+            'college' => $college,
+            'major'   => $major,
+            'deal'    => $deal,
+        ));
+    }
+
+    public function ajax_edit_deal()
+    {
+        $id = input('param.id/d');
+        $content = input('param.content/s');
+        if(empty($id) || empty($content)){
+            return json(array(
+                'code'  => 404,
+                'error' => ''
+            ));
+        }
+        $majorModel = model('Major');
+        $major = $majorModel->getMajorById($id);
+        if(empty($major)){
+            return json(array(
+                'code'  => 404,
+                'error' => ''
+            ));
+        }
+        $deal = $majorModel->getMajorDealById($id);
+        if(empty($deal)){
+            $data = array(
+                'md_id' => $id,
+                'md_content' => $content,
+            );
+            $result = Db::name('major_deal')->insert($data);
+        }else{
+            $data   = 
+            $result = Db::name('major_history')->insert(array(
+                'dh_major' => $deal['md_id'],
+                'dh_content' => $deal['md_content'],
+            ));
+            $result = Db::name('major_deal')->where('md_id',$deal['md_id'])
+                ->update(array(
+                'md_content' => $content,
+            ));
+        }
+        return json(array(
+            'code'  => 200,
+            'error' => ''
         ));
     }
 }

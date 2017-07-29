@@ -31,7 +31,7 @@
 	<tbody>
 		<?php foreach($collegeList as $college):?>
 		<tr style="">
-			<td><img src="/"></td>
+			<td><img class="list_thumb" src="/uploads/<?php echo $college['thumb'];?>"></td>
 			<td><?php echo $college['co_name'];?></td>
 			<td>
 				<p>访客数：</p>
@@ -44,7 +44,7 @@
 				<p><?php echo $college['co_channel_c']?'专本连读':'';?></p>
 				<p><?php echo $college['co_channel_d']?'研究生':'';?></p>
 			</td>
-			<td><?php echo date('Y-m-d H:i',$college['co_create']);?></td>
+			<td><?php echo $college['co_insert_at'];?></td>
 			<td><?php echo $college['co_state'] ? '上架' : '下架';?></td>
 			<td>
 				<p><?php echo date('Y-m-d H:i',$college['co_start']);?></p>

@@ -8,7 +8,7 @@ class School extends Validate
     protected $rule = [
     	'sc_id'   => 'number',
 	    'sc_name' => 'require|length:4,25|checkName',
-		'sc_english' => 'require|length:4,25',
+		'sc_english' => 'require|length:4,25|checkEnglish',
 		'sc_introduction' => 'require|length:4,25',
 		'sc_nature' => 'require|length:2,6',
 		'sc_addr_pid' => 'require',
@@ -46,5 +46,16 @@ class School extends Validate
     	}else{
     		return $value.'已经存在';
     	}
+    }
+
+    // 自定义验证规则
+    protected function checkEnglish($value,$rule,$data)
+    {
+        $school = model('School')->getSchoolByEnglish($value);
+        if( empty($school) || $school['sc_id'] == $data['sc_id'] ){
+            return true;
+        }else{
+            return $value.'已经存在';
+        }
     }
 }

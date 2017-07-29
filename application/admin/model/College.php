@@ -21,7 +21,7 @@ class College
 		return $result;
 	}
 
-	public function getCollegeCountBySchoolId($schoolId)
+	public function getCountBySchoolId($schoolId)
 	{
 		$result = Db::name('college')->where(array(
 			'co_school' => $schoolId,
@@ -33,13 +33,35 @@ class College
 	{
 		$result = Db::name('college')->where(array(
 			'co_school' => $schoolId
-		))->select();
+		))->order('co_insert_at desc')->select();
 		return $result;
 	}
 
 	public function mdfCollegeById($id,$data)
 	{
 		$result = Db::name('college')->where('co_id',$id)->update($data);
+		return $result;
+	}
+
+	/**
+	 * 根据专业id查专业的图片
+	 */
+	public function getThumbArrByCollegeId($CollegeId)
+	{
+		$result = Db::name('college_thumb')->where(array(
+			'ch_college' => $CollegeId,
+		))->select();
+		return $result;
+	}
+
+	/**
+	 * 获取单个路径
+	 */
+	public function getThumbByCollegeId($collegeId)
+	{
+		$result = Db::name('college_thumb')->where(array(
+			'ch_college' => $collegeId,
+		))->find();
 		return $result;
 	}
 }

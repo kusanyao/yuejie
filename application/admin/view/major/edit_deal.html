@@ -1,0 +1,60 @@
+{extend name="public/base" /}
+{block name="right"}
+<div class="crumbs">
+	<span>创建专业</span>
+</div>
+<ul class="edit_from">
+<form method="post">
+	<li>
+		<span>高校名称：</span>
+		<input type="text" value="<?php echo $school['sc_name'];?>" disabled />
+	</li>
+	<li>
+		<span>学院名称：</span>
+		<input type="text" value="<?php echo $college['co_name'];?>" disabled />
+	</li>
+	<li>
+		<span>专业名称：</span>
+		<input type="hidden" name="id" value="<?php echo $major['ma_id'];?>">
+		<input type="text" value="<?php echo $major['ma_name'];?>" disabled>
+	</li>
+	
+	<li>
+		<input id="edit_submit" type="button" value="保存" data-url="/major/ajax_edit_deal">
+	</li>
+	<li>
+		<script id="container" name="content" type="text/plain"><?php echo $deal['md_content'];?></script>
+	</li>
+	
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/static/ueditor/ueditor.all.min.js"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var ue = UE.getEditor('container',{
+        	initialFrameWidth:500,
+        	initialFrameHeight:500,
+        	toolbars: [
+			    ['fullscreen', 'source', 'undo', 'redo', 'bold','insertimage','simpleupload']
+			]
+        });
+  //       UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+		// UE.Editor.prototype.getActionUrl = function(action) {
+		//     if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+		//         return 'http://a.b.com/upload.php';
+		//     } else if (action == 'uploadvideo') {
+		//         return 'http://a.b.com/video.php';
+		//     } else {
+		//         return this._bkGetActionUrl.call(this, action);
+		//     }
+		// }
+    </script>
+	</form>
+</ul>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+	
+</script>
+{/block}
