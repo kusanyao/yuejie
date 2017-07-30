@@ -8,14 +8,21 @@ class Base extends \think\Controller
     public function __construct()
 	{
 		parent::__construct();
-		$this->member = Session::get('user');
-		$controller = Request::instance()->controller();
-		$action = Request::instance()->action();
-		$isLogin = ($controller == 'Member' && $action == 'login');
-		if(empty($this->member) && !$isLogin ){
-			header("Location: /member/login"); 
-		}elseif(!empty($this->member) && $isLogin){
-			header("Location: /"); 
+	}
+
+	public function __get($method)
+	{
+		if($method == 'wechat'){
+			if(!isset($this->wechat)){
+				$this->wechat = Session::get('wechat');
+			}
+			return $this->wechat;
+		}
+		if($method == 'user'){
+			if(!isset($this->user)){
+				$this->user = Session::get('user');
+			}
+			return $this->user;
 		}
 	}
 }
