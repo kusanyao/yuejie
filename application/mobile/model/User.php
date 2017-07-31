@@ -9,9 +9,9 @@ class User
 	 */
 	public function getUserById($id)
 	{
-		$result = Db::name('user')->where(array(
-			'us_id' => $id
-		))->find();
+
+		$result = Db::name('user')
+			->where('us_id',$id)->find();
 		return $result;
 	}
 
@@ -56,6 +56,15 @@ class User
 		$result = Db::name('user')->where(array(
 			'us_wechat' => $wechatId
 		))->find();
+		return $result;
+	}
+
+	/**
+	 * 根据wechatId查账户信息
+	 */
+	public function getLastUser()
+	{
+		$result = Db::name('user')->order('us_id desc')->find();
 		return $result;
 	}
 

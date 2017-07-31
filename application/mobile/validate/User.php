@@ -7,9 +7,9 @@ class User extends Validate
 {
     protected $rule = [
         'us_id'       => 'require|number',
-        'us_phone'    => 'require|number|length:11||checkPhone',
-    	'us_username' => 'require||length:4,25|checkUsername',
-	    'us_password' => 'require|length:6,15',
+        'us_phone|手机号'    => 'require|number|length:11|checkPhone',
+    	'us_username|用户名' => 'require|length:4,25|checkUsername',
+	    'us_password|密码' => 'require|length:6,15',
         'us_wechat'   => 'require|number',
         'us_email'    => 'require|email|length:4,25',
     ];
@@ -29,12 +29,12 @@ class User extends Validate
 
     protected function checkPhone($value,$rule,$data)
     {
-        $res = model('Common','logic')->checkPhone($value);
-        if(!$res){
-            return '请先验证手机验证码';
-        }
+        // $res = model('Common','logic')->checkedPhone($value);
+        // if(!$res){
+        //     return '请先验证手机验证码';
+        // }
         $user = model('user')->getUserByPhone($value);
-        if( empty($user) || $user['us_id'] == $data['us_id'] ){
+        if( empty($user) || (isset($data['us_id']) && $user['us_id'] == $data['us_id']) ){
             return true;
         }else{
             return $value.'已经存在';
@@ -48,7 +48,7 @@ class User extends Validate
             return '用户名中不能包含“'.implode('，', array_unique($illegal[0]) ).'”字符';
         }
     	$user = model('user')->getUserByUsername($value);
-    	if( empty($user) || $user['us_id'] == $data['us_id'] ){
+    	if( empty($user) || (isset($data['us_id']) &&  $user['us_id'] == $data['us_id']) ){
     		return true;
     	}else{
     		return $value.'已经存在';

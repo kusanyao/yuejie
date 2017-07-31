@@ -10,10 +10,10 @@ class User extends Base
         parent::__construct();
     }
 
+
+
 	public function register()
 	{
-
-
         if($this->user){
             return redirect('/');
         }
@@ -39,14 +39,13 @@ class User extends Base
      * 注册请求
      */
     public function ajax_register()
-    {
-        $value = "asdf@@@@";
-        
+    {        
         $data = array(
             'us_phone'    => input('param.phone/s'),
             'us_username' => input('param.username/s'),
             'us_password' => input('param.password/s'),
         );
+
         $result = $this->validate($data,'User.phone_reg');
         if(true !== $result){
             return json(array(
@@ -54,10 +53,10 @@ class User extends Base
                 'error' => $result
             ));
         }
-        $result = model('User.register')->register($data);
+        $result = model('User','logic')->register($data);
         return json(array(
             'code'  => 200,
-            'error' => $result
+            'result' => 'OK'
         ));
     }
 
@@ -68,14 +67,14 @@ class User extends Base
     {
     	if($this->user){
             return json(array(
-                'code'  => 204,
-                'error' => ''
+                'code'  => 100,
+                'error' => '您已经登录了'
             ));
         }
         if(isWechat()){
             return json(array(
                 'code'  => 206,
-                'error' => ''
+                'error' => '请通过微信登录'
             ));
         }
         $account  = input('param.account/s');
@@ -87,10 +86,34 @@ class User extends Base
             ));
         }
         $result = model('User','logic')->login($account,$password);
+        if($result){
+            return json(array(
+                'code'  => 200,
+                'result' => 'ok'
+            ));
+        }
         return json(array(
-            'code'  => 200,
-            'error' => ''
+            'code'  => 206,
+            'result' => '用户名或者密码错误'
         ));
     }
 
+    /**
+     * 获取当前登录的用户信息
+     */
+    public function ajax_userinfo()
+    {
+        if(!$this->user){
+            return json(array(
+                'code'  => 201,
+                'error' => '您还没有登录呢'
+            ));
+        }
+        $user = model('User')->getUserById($this->user['id']);
+        unset($user['us_password']);
+        return json(array(
+            'code'  => 200,
+            'result' => $user
+        ));
+    }
 }

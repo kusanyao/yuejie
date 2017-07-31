@@ -19,7 +19,7 @@ class Userinfo
 	{
 		$userinfo = $this->getUserinfoById($id);
 		if(empty($userinfo)){
-			$data['ui_id'] = $id,
+			$data['ui_id'] = $id;
 			return Db::name('Userinfo')->insert($data);
 		}else{
 			return Db::name('Userinfo')->where('ui_id',$id)->update($data);

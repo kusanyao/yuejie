@@ -1,13 +1,15 @@
 <?php
 namespace app\mobile\logic;
 use think\Session;
+use think\Db;
+use think\Validate;
 
 class User
 {
 	/**
 	 * 手机号注册
 	 */
-	public function register($user,$userinfo=[])
+	public function register($data,$userinfo=[])
 	{
 		if(empty($data) || empty($data['us_phone']) || empty($data['us_username']) ){
 			return false;
@@ -32,9 +34,17 @@ class User
 
 	public function login($account,$password)
 	{
-		if(){
-			
+		if(Validate::is($account,'email')){
+			$user = model('User')->getUserByEmail($account);
+		}elseif(is_numeric($account) && strlen($account) == 11){
+			$user = model('User')->getUserByPhone($account);
+		}else{
+			$user = model('User')->getUserByUsername($account);
 		}
+		if(empty($user) || $user['us_password'] != md5($password)){
+			return false;
+		}
+		return $this->loginAuth($user['us_id']);
 	}
 
 	/**
@@ -42,16 +52,23 @@ class User
 	 */
 	public function getAllowUsername($username)
 	{
-		$suffix = '';
-		$username = $username ? $username : 'yuejie-';
+		if( preg_match_all('/[^a-zA-Z0-9!#$%^&*\.()\x80-\xff]/',$username,$illegal)){
+            $username = str_replace($illegal[0],'',$username);
+        }
+        $suffix = '';
+        $username = $username ? $username : 'yuejie-';
 		while (1) {
 			$tryUsername = $username.$suffix;
 			$user = model('User')->getUserByUsername($tryUsername);
 			if(empty($user)){
 				return $tryUsername;
 			}
+			if($suffix == ''){
+				$lastUser = model('User')->getLastUser();
+				$suffix = $lastUser['us_id'];
+			}
 			$suffix = intval($suffix)+1;
-		}		
+		}
 	}
 
 	/**
@@ -67,9 +84,10 @@ class User
 		if(empty($userinfo)){
 
 		}
-		return Session::set('user',array(
-    		'id' => $user['ad_id'],
-    		'username' => $user['ad_username'],
+		$res = Session::set('user',array(
+    		'id'       => $user['us_id'],
+    		'username' => $user['us_username'],
     	));
+		return true;
 	}
 }

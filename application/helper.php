@@ -10,13 +10,3 @@ function isWechat(){
 	}
 	return true;
 }
-function username($username){
-	if(empty($username)){
-		return '';
-	}
-	$pattern = '/(\w+) (\d+), (\d+)/i';
-	$replacement = '${1}1,$3';
-	echo preg_replace($pattern, $replacement, $username);
-	//^[a-zA-Z0-9!#$%^&*\.()\u4e00-\u9fa5]{3,15}$
-    
-}

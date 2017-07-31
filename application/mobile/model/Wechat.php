@@ -10,7 +10,7 @@ class Wechat
 	public function getWechatById($id)
 	{
 		$result = Db::name('wechat')->where(array(
-			'wx_id' => $id
+			'we_id' => $id
 		))->find();
 		return $result;
 	}
@@ -21,7 +21,7 @@ class Wechat
 	public function getWechatByUnionid($unionid)
 	{
 		$result = Db::name('wechat')->where(array(
-			'wx_unionid' => $unionid
+			'we_unionid' => $unionid
 		))->find();
 		return $result;
 	}
@@ -34,7 +34,7 @@ class Wechat
 		switch ($type) {
 			case 'wap':
 				$result = Db::name('wechat')->where(array(
-					'wx_wap_openid' => $openid
+					'we_wap_openid' => $openid
 				))->find();
 				break;
 			
@@ -47,7 +47,7 @@ class Wechat
 
 	public function getTokenByOpenid($openid)
 	{
-		return Db::name('wechat')->where(array(
+		return Db::name('wechat_token')->where(array(
 			'wt_openid' => $openid,
 		))->find();
 	}
@@ -57,22 +57,30 @@ class Wechat
 		$wechat = $this->getWechatByUnionid($data['unionid']);
 		if(empty($wechat)){
 			return Db::name('wechat')->insert(array(
-				'we_unionid' => $data['access_token'],
-				'we_wap_openid'   => $data['refresh_token'],
-				'wt_openid'       => $data['openid'],
-				'wt_scope'        => $data['scope'],
-				'wt_refresh_time' => itme()
+				'we_unionid'    => $data['unionid'],
+				'we_wap_openid' => $data['openid'],
+				'we_nickname'   => $data['nickname'],
+				'we_headimgurl' => $data['headimgurl'],
+				'we_sex'        => $data['sex'],
+				'we_province'   => $data['province'],
+				'we_city'       => $data['city'],
+				'we_country'    => $data['country'],
+				'we_privilege'  => json_encode($data['privilege']),
 			));
 		}else{
-			return Db::name('wechat')->where('wt_unionid',$data['unionid'])->update(array(
-				'wt_access_token' => $data['access_token'],
-				'wt_expires_in'   => $data['refresh_token'],
-				'wt_scope'        => $data['scope'],
-				'wt_refresh_time' => itme()
+			return Db::name('wechat')->where('we_unionid',$data['unionid'])->update(array(
+				'we_wap_openid' => $data['openid'],
+				'we_nickname'   => $data['nickname'],
+				'we_headimgurl' => $data['headimgurl'],
+				'we_sex'        => $data['sex'],
+				'we_province'   => $data['province'],
+				'we_city'       => $data['city'],
+				'we_country'    => $data['country'],
+				'we_privilege'  => json_encode($data['privilege']),
 			));
 		}
 		$wechat = $this->getWechatByUnionid($data['unionid']);
-		return $wechat;
+		return $wechat['we_id'];
 	}
 
 	/**
@@ -83,18 +91,19 @@ class Wechat
 		$token = $this->getTokenByOpenid($data['openid']);
 		if(empty($token)){
 			return Db::name('wechat_token')->insert(array(
-				'wt_access_token' => $data['access_token'],
-				'wt_expires_in'   => $data['refresh_token'],
-				'wt_openid'       => $data['openid'],
-				'wt_scope'        => $data['scope'],
-				'wt_refresh_time' => itme()
+				'wt_access_token'  => $data['access_token'],
+				'wt_expires_in'    => $data['expires_in'],
+				'wt_refresh_token' => $data['refresh_token'],
+				'wt_openid'        => $data['openid'],
+				// 'wt_unionid'       => $data['unionid'],
+				'wt_refresh_time'  => time()
 			));
 		}else{
 			return Db::name('wechat_token')->where('wt_openid',$data['openid'])->update(array(
 				'wt_access_token' => $data['access_token'],
-				'wt_expires_in'   => $data['refresh_token'],
+				'wt_expires_in'   => $data['expires_in'],
 				'wt_scope'        => $data['scope'],
-				'wt_refresh_time' => itme()
+				'wt_refresh_time' => time()
 			));
 		}
 	}
