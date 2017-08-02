@@ -1,0 +1,46 @@
+From 1a66897f2b9c89776096238e8f25d2766bf70d2b Mon Sep 17 00:00:00 2001
+From: kusanyao <kusanyao@qq.com>
+Date: Wed, 2 Aug 2017 19:26:39 +0800
+Subject: [PATCH] =?UTF-8?q?=E5=88=A0=E9=99=A4env?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ .env                  | 6 ------
+ application/route.php | 4 ++--
+ 2 files changed, 2 insertions(+), 8 deletions(-)
+ delete mode 100644 .env
+
+diff --git a/.env b/.env
+deleted file mode 100644
+index 7d8a00f..0000000
+--- a/.env
++++ /dev/null
+@@ -1,6 +0,0 @@
+-app_debug =  true
+-app_trace =  true
+-
+-database_hostname =  127.0.0.1
+-database_username =  root
+-database_password =  root
+\ No newline at end of file
+diff --git a/application/route.php b/application/route.php
+index dff991d..4c4267e 100644
+--- a/application/route.php
++++ b/application/route.php
+@@ -12,9 +12,9 @@
+ return [
+ 	'__domain__'=>[
+         'admin'    => 'admin',
+-        'www'      => 'index',
+-        'wx'       => 'wechat',
++        'www'      => 'mobile',
+         'm'        => 'mobile',
++        // 'wx'       => 'wechat',
+         // // 泛域名规则建议在最后定义
+         // '*.user'    =>  'user',
+         // '*'         => 'book',
+-- 
+2.12.0.windows.1
+

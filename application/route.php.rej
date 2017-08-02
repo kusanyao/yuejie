@@ -1,0 +1,13 @@
+diff a/application/route.php b/application/route.php	(rejected hunks)
+@@ -12,9 +12,9 @@
+ return [
+ 	'__domain__'=>[
+         'admin'    => 'admin',
+-        'www'      => 'index',
+-        'wx'       => 'wechat',
++        'www'      => 'mobile',
+         'm'        => 'mobile',
++        // 'wx'       => 'wechat',
+         // // 泛域名规则建议在最后定义
+         // '*.user'    =>  'user',
+         // '*'         => 'book',
