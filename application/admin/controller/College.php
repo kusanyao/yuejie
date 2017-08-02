@@ -27,18 +27,19 @@ class College extends Base
     public function edit()
     {
         $id = input('param.id/d');
+        $areaModel = model('Area');
         if($id > 0){
             $college  = model('College')->getCollegeById($id);
             $collegeThumb = model('College')->getThumbArrByCollegeId($id);
             $schoolId = $college['co_school'];
-            $city   = model('Citybook')->getItemsByPid($college['co_addr_pid']);
-            $area   = model('Citybook')->getItemsByPid($college['co_addr_cid']);
+            $city   = $areaModel->getItemsByPid($college['co_addr_pid']);
+            $area   = $areaModel->getItemsByPid($college['co_addr_cid']);
         }else{
             $college = $collegeThumb = $city = $area = [];
             $schoolId = input('param.school/d');
         }
         $school   = model('School')->getSchoolById($schoolId);
-        $province = model('Citybook')->getItemsByLevel(1);
+        $province = $areaModel->getItemsByPid(1);
     	return view('edit',array(
             'province' => $province,
             'city'     => $city,
@@ -79,7 +80,15 @@ class College extends Base
             }
         }
         $aid = input('param.addr_aid/d');
-        $fulArea = model('Citybook')->getFulAraeByAid($aid);
+        $fulArea = model('Area')->getFulAraeByAid($aid);
+        $start = strtotime(input('param.start/s'));
+        $end   = strtotime(input('param.end/s'));
+        if(empty($start) || empty($end)){
+            return json(array(
+                'code'  => 206,
+                'error' => '上架时间错误'
+            ));
+        }
         $data = array(
             'co_id'   => $id,
             'co_school'   => $schoolId,
@@ -87,9 +96,9 @@ class College extends Base
             'co_year'     => input('param.year/d'),
             'co_person'     => input('param.person/s'),
             'co_person_tel' => input('param.person_tel/d'),
-            'co_addr_aid' => $fulArea['item_a']['cb_id'],
-            'co_addr_cid' => $fulArea['item_c']['cb_id'],
-            'co_addr_pid' => $fulArea['item_p']['cb_id'],
+            'co_addr_aid' => $fulArea['item_a']['ar_id'],
+            'co_addr_cid' => $fulArea['item_c']['ar_id'],
+            'co_addr_pid' => $fulArea['item_p']['ar_id'],
             'co_addr_ful' => $fulArea['ful'],
             'co_channel_a' => (int)input('param.channel_a/d'),
             'co_channel_b' => (int)input('param.channel_b/d'),
@@ -99,8 +108,8 @@ class College extends Base
             'co_person_tel'    => input('param.person_tel/s'),
             'co_introduction'  => input('param.introduction/s'),
             'co_sort'  => input('param.sort/d'),
-            'co_start' => strtotime(input('param.start/s')),
-            'co_end'   => strtotime(input('param.end/s')),
+            'co_start' => $start,
+            'co_end'   => $end,
             'co_state' => input('param.state/d'),
         );
         $result = $this->validate($data,'College.create');
@@ -122,8 +131,8 @@ class College extends Base
             ));
         }else{
             return json(array(
-                'code'   => 200,
-                'result' => $result
+                'code'   => 500,
+                'error' => '添加失败'
             ));
         }
     }

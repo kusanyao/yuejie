@@ -12,7 +12,7 @@
 return [
 	'__domain__'=>[
         'admin'    => 'admin',
-        'www'      => 'index',
+        'www'      => 'mobile',
         'wx'       => 'wechat',
         'm'        => 'mobile',
         // // 泛域名规则建议在最后定义

@@ -31,11 +31,11 @@ $(function(){
 	$('.area_select').change(function(){
 		var pid   = $(this).val();
 		var level = $(this).data('area-level');
-		$.get("/citybook/items",{pid:pid},function(res){
+		$.get("/area/items",{pid:pid},function(res){
 		    if(res.code == 200 ){
 		    	var option = '';
 		    	$.each(res.result,function(key,value){
-		    		option += '<option value='+value.cb_id+'>'+value.cb_area+'</option>'
+		    		option += '<option value='+value.ar_id+'>'+value.ar_name+'</option>'
 		    	});
 		    	if(level == 1){
 		    		// 清空城市和地区

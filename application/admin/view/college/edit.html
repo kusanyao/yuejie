@@ -44,22 +44,22 @@
 		<select class="area_select" data-area-level="1">
 			<option>选择省份</option>
 			<?php foreach($province as $v):?>
-				<option value="<?php echo $v['cb_id'];?>" <?php if($college && $college['co_addr_pid'] == $v['cb_id']) echo 'selected="selected"';?>><?php echo $v['cb_area']?></option>
+				<option value="<?php echo $v['ar_id'];?>" <?php if($college && $college['co_addr_pid'] == $v['ar_id']) echo 'selected="selected"';?>><?php echo $v['ar_name']?></option>
 			<?php endforeach;?>
 		</select>
 		<select class="area_select" data-area-level="2">
 			<option>选择城市</option>
 			<?php foreach($city as $v):?>
-				<option value="<?php echo $v['cb_id'];?>" <?php if($college && $college['co_addr_cid'] == $v['cb_id']) echo 'selected="selected"';?>><?php echo $v['cb_area']?></option>
+				<option value="<?php echo $v['ar_id'];?>" <?php if($college && $college['co_addr_cid'] == $v['ar_id']) echo 'selected="selected"';?>><?php echo $v['ar_name']?></option>
 			<?php endforeach;?>
 		</select>
 		<select class="area_select" data-area-level="3" name="addr_aid">
 			<option>选择地区</option>
 			<?php foreach($area as $v):?>
-				<option value="<?php echo $v['cb_id'];?>" <?php if($college && $college['co_addr_aid'] == $v['cb_id']) echo 'selected="selected"';?>><?php echo $v['cb_area']?></option>
+				<option value="<?php echo $v['ar_id'];?>" <?php if($college && $college['co_addr_aid'] == $v['ar_id']) echo 'selected="selected"';?>><?php echo $v['ar_name']?></option>
 			<?php endforeach;?>
 		</select>
-		<input type="" name="addr_street" placeholder="请填写具体地址" value="<?php if($school) echo $school['sc_addr_street'];?>">
+		<input type="" name="addr_street" placeholder="请填写具体地址" value="<?php if($college) echo $college['co_addr_street'];?>">
 	</li>
 	<li>
 		<span>对接人：</span>

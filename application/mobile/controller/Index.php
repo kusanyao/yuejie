@@ -4,7 +4,7 @@ namespace app\mobile\controller;
 class Index extends Base
 {
     public function index()
-    {
+    {die('dsaf');
         return $this->fetch();
     }
 

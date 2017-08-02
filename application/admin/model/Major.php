@@ -1,5 +1,5 @@
 <?php
-namespace app\mobile\model;
+namespace app\admin\model;
 use think\Db;
 
 class Major

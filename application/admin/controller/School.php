@@ -22,15 +22,16 @@ class School extends Base
     public function edit()
     {
         $id = input('param.id/d');
+        $areaModel = model('Area');
         if($id > 0){
             $school = model('School')->getSchoolById($id);
             $schoolThumb = model('School')->getThumbArrBySchoolId($id);
-            $city   = model('Citybook')->getItemsByPid($school['sc_addr_pid']);
-            $area   = model('Citybook')->getItemsByPid($school['sc_addr_cid']);
+            $city   = $areaModel->getItemsByPid($school['sc_addr_pid']);
+            $area   = $areaModel->getItemsByPid($school['sc_addr_cid']);
         }else{
             $school = $city = $area = $schoolThumb = [];
         }
-        $province = model('Citybook')->getItemsByLevel(1);
+        $province = $areaModel->getItemsByPid(1);
     	return view('edit',array(
             'province' => $province,
             'city'     => $city,
@@ -44,7 +45,7 @@ class School extends Base
     {
         $id  = input('param.id/d');
         $aid = input('param.addr_aid/d');
-        $fulArea = model('Citybook')->getFulAraeByAid($aid);
+        $fulArea = model('Area')->getFulAraeByAid($aid);
         $data = array(
             'sc_id' => $id,
             'sc_name'  => input('param.name/s'),
@@ -52,9 +53,9 @@ class School extends Base
             'sc_year'     => input('param.year/s'),
             'sc_nature'   => input('param.nature/s'),
             'sc_person'   => input('param.person/s'),
-            'sc_addr_aid' => $fulArea['item_a']['cb_id'],
-            'sc_addr_cid' => $fulArea['item_c']['cb_id'],
-            'sc_addr_pid' => $fulArea['item_p']['cb_id'],
+            'sc_addr_aid' => $fulArea['item_a']['ar_id'],
+            'sc_addr_cid' => $fulArea['item_c']['ar_id'],
+            'sc_addr_pid' => $fulArea['item_p']['ar_id'],
             'sc_addr_ful' => $fulArea['ful'],
             'sc_addr_street'  => input('param.addr_street/s'),
             'sc_person_tel'   => input('param.person_tel/s'),
@@ -78,20 +79,20 @@ class School extends Base
             if(empty($schoolThumbStr)){
                 return json(array(
                     'code'  => 206,
-                    'error' => '专业缩略图不能为空'
+                    'error' => '学校缩略图不能为空'
                 ));
             }
             $schoolThumbArr = json_decode($schoolThumbStr,true);
             if(empty($schoolThumbArr)){
                 return json(array(
                     'code'  => 207,
-                    'error' => '专业缩略图不能为空'
+                    'error' => '学校缩略图不能为空'
                 ));
             }
             if(empty($schoolThumbArr)){
                 return json(array(
                     'code'  => 207,
-                    'error' => '专业缩略图不能为空'
+                    'error' => '学校缩略图不能为空'
                 ));
             }
             $result = model('School','logic')->addSchool($data,$schoolThumbArr);

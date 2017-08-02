@@ -9,7 +9,7 @@ class College
 	 */
 	public function addCollege($collegeData,$collegeThumbObj)
 	{
-		if(empty($collegeData) || empty($collegeThumObj)){
+		if(empty($collegeData) || empty($collegeThumbObj)){
 			return false;
 		}
 		$collegeId = Db::name('college')->insertGetId($collegeData);
