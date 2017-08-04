@@ -19,8 +19,25 @@ class Major
 		return $result;
 	}
 
-	
-	public function getMajorList($condition=[])
+	/**
+	 * 根据id查专业
+	 */
+	public function getMajorByIds($ids)
+	{
+		$nowTime = time();
+		$result = Db::name('Major')->where(array(
+			'ma_id' => ['in',$ids],
+			'ma_state' => 1,
+			'ma_start' => ['<',$nowTime],
+			'ma_end' => ['>',$nowTime],
+		))->select();
+		return $result;
+	}
+
+	/**
+	 * 查专业列表
+	 */
+	public function getMajorList($condition=[],$limit=20,$offset=0)
 	{
 		$nowTime = time();
 		$where = array(
@@ -31,6 +48,7 @@ class Major
 		$result = Db::name('major')
 			->where($where)
 			->order('ma_sort desc')
+			->limit($limit,$offset)
 			->select();
 		return $result;
 	}

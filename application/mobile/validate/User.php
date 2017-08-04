@@ -6,12 +6,11 @@ use think\Session;
 class User extends Validate
 {
     protected $rule = [
-        'us_id'       => 'require|number',
         'us_phone|手机号'    => 'require|number|length:11|checkPhone',
     	'us_username|用户名' => 'require|length:4,25|checkUsername',
-	    'us_password|密码' => 'require|length:6,15',
-        'us_wechat'   => 'require|number',
-        'us_email'    => 'require|email|length:4,25',
+	    'us_password|密码'   => 'require|length:6,15',
+        'us_wechat'          => 'require|number',
+        'us_email|email'     => 'require|email|length:4,25',
     ];
 
     protected $message  =   [
@@ -29,12 +28,14 @@ class User extends Validate
 
     protected function checkPhone($value,$rule,$data)
     {
-        // $res = model('Common','logic')->checkedPhone($value);
-        // if(!$res){
-        //     return '请先验证手机验证码';
-        // }
+        // 校验手机号是否完成了短信验证
+        $res = model('Common','logic')->checkedPhone($value);
+        if(!$res){
+            return '请先验证手机验证码';
+        }
+        // 校验手机号是否被占用
         $user = model('user')->getUserByPhone($value);
-        if( empty($user) || (isset($data['us_id']) && $user['us_id'] == $data['us_id']) ){
+        if( empty($user) ){
             return true;
         }else{
             return $value.'已经存在';
@@ -44,9 +45,11 @@ class User extends Validate
     // 自定义验证规则
     protected function checkUsername($value,$rule,$data)
     {
+        // 校验用户名是否使用了非法字符，并返回告知用户
         if( preg_match_all('/[^a-zA-Z0-9!#$%^&*\.()\x80-\xff]/',$value,$illegal)){
             return '用户名中不能包含“'.implode('，', array_unique($illegal[0]) ).'”字符';
         }
+        // 校验用户名是否被占用
     	$user = model('user')->getUserByUsername($value);
     	if( empty($user) || (isset($data['us_id']) &&  $user['us_id'] == $data['us_id']) ){
     		return true;

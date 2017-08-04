@@ -4,8 +4,8 @@ use think\Db;
 
 class Major
 {
-	public function getMajorList()
-	{
-		DB::
-	}
+	// public function getMajorList()
+	// {
+	// 	DB::
+	// }
 }

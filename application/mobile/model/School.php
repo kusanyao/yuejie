@@ -17,10 +17,16 @@ class School
 
 	public function getSchoolList()
 	{
-		$result = Db::name('major')
+		$result = Db::name('school')
 			->join('school','yj_major.ma_school=yj_school.sc_id')
 			->order('ma_sort desc,ma_id asc')
-			->find();
+			->where(array(
+				'ma_id' => $id,
+				'ma_state' => 1,
+				'ma_start' => ['<',$nowTime],
+				'ma_end' => ['>',$nowTime],
+			))
+			->select();
 		return $result;
 	}
 }

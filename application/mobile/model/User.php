@@ -1,6 +1,7 @@
 <?php
 namespace app\mobile\model;
 use think\Db;
+use think\Request;
 
 class User
 {
@@ -68,4 +69,26 @@ class User
 		return $result;
 	}
 
+	/**
+	 * 记录登录日志
+	 */
+	public function recordLoginLog($uid,$account,$mode)
+	{
+		return Db::name('login_log')->insert(array(
+			'll_uid'        => $uid,
+			'll_mode'       => $mode,
+			'll_account'    => $account,
+			'll_date'       => date('Y-m-d'),
+			'll_agent' => Request::instance()->header('User-Agent'),
+		));
+	}
+
+	/**
+	 * 获取登录天数
+	 */
+	public function getLoginDays($uid)
+	{
+		return Db::name('login_log')
+			->where('ll_uid',$uid)->count('distinct ll_date');
+	}
 }

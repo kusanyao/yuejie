@@ -44,6 +44,7 @@ class User
 		if(empty($user) || $user['us_password'] != md5($password)){
 			return false;
 		}
+		model('user')->recordLoginLog($user['us_id'],$account,1);
 		return $this->loginAuth($user['us_id']);
 	}
 

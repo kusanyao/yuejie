@@ -5,8 +5,7 @@ use think\Session;
 
 class Common extends Base
 {
-    private $AccessKeyID = 'LTAIW5r4gVmjja3s';
-    private $AccessKeySecret = '8EWhGjO3ePysq1lTfCytBFY8z8YOPW';
+    
 
 	/**
 	 * 发送验证码

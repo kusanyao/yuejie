@@ -55,26 +55,26 @@ class User extends Base
         }
         $result = model('User','logic')->register($data);
         return json(array(
-            'code'  => 200,
+            'code'   => 200,
             'result' => 'OK'
         ));
     }
 
     /**
-     * 
+     * 登录请求
      */
     public function ajax_login()
     {
     	if($this->user){
             return json(array(
-                'code'  => 100,
+                'code'  => 201,
                 'error' => '您已经登录了'
             ));
         }
         if(isWechat()){
             return json(array(
                 'code'  => 206,
-                'error' => '请通过微信登录'
+                'error' => '请先通过微信登录'
             ));
         }
         $account  = input('param.account/s');
@@ -82,7 +82,7 @@ class User extends Base
         if(empty($account) || empty($password)){
             return json(array(
                 'code'  => 206,
-                'error' => ''
+                'error' => '帐号或密码为空'
             ));
         }
         $result = model('User','logic')->login($account,$password);
@@ -109,11 +109,18 @@ class User extends Base
                 'error' => '您还没有登录呢'
             ));
         }
-        $user = model('User')->getUserById($this->user['id']);
+        $userModel = model('User');
+        $user      = $userModel->getUserById($this->user['id']);
+        $userinfo  = model('Userinfo')->getUserinfoById($this->user['id']);
+        $loginDays = $userModel->getLoginDays($this->user['id']);
         unset($user['us_password']);
         return json(array(
             'code'  => 200,
-            'result' => $user
+            'result' => array(
+                'user'     => $user,
+                'userinfo' => $userinfo,
+                'loginDays' => $loginDays
+            )
         ));
     }
 }

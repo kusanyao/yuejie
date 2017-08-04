@@ -67,7 +67,7 @@ class School
 	/**
 	 * 
 	 */
-	public function getSchoolList()
+	public function getSchoolList($condition,$limit=20,$offset=0)
 	{
 		$collegeModel = model('College');
 		$schoolModel   = model('school');
