@@ -52,11 +52,14 @@ class Major
 	/**
 	 * 根据学院id查专业列表
 	 */
-	public function getMajorListByCollegeId($collegeId)
+	public function getMajorListByCollegeId($collegeId,$condition=[],$limit=20,$offset=0)
 	{
 		$result = Db::name('Major')->where(array(
 			'ma_college' => $collegeId,
-		))->select();
+		))
+		->limit($offset,$limit)
+		->order('ma_sort asc')
+		->select();
 		return $result;
 	}
 

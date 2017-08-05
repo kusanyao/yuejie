@@ -5,14 +5,21 @@ use think\Validate;
 
 class School extends Base
 {
+    
 	/**
 	 * 列表
 	 */
     public function list()
     {
-        $schoolList = model('School','logic')->getSchoolList();
+        $count = model('school')->getCount();
+        $limit = $this->getLimit();
+        $page  = $this->getPage();
+        $offset = $this->getOffset();
+        $schoolList = model('School','logic')->getSchoolList([],$limit,$offset);
         return $this->fetch('list',array(
-            'schoolList' => $schoolList
+            'schoolList' => $schoolList,
+            'count'     => $count,
+            'pages'    =>$this->getPageHtml($page,$count,$limit),
         ));
     }
 

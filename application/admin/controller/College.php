@@ -10,14 +10,21 @@ class College extends Base
 	 */
     public function list()
     {
+
+        $limit = $this->getLimit();
+        $page  = $this->getPage();
+        $offset = $this->getOffset();
         $schoolId = input('param.school/d');
         if($schoolId <= 0){
             redirect('/school/list');
         }
-        $collegeList = model('College','logic')->getCollegeListBySchoolId($schoolId);
+        $count = model('College')->getCountBySchoolId($schoolId);
+        $collegeList = model('College','logic')->getCollegeListBySchoolId($schoolId,
+            [],$offset,$limit);
         return $this->fetch('list',array(
             'schoolId'   => $schoolId,
-            'collegeList' => $collegeList
+            'collegeList' => $collegeList,
+            'pages' =>$this->getPageHtml($page,$count,$limit),
         ));
     }
 

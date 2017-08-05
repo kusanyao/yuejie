@@ -64,12 +64,13 @@ class College
 	/**
 	 * 
 	 */
-	public function getCollegeListBySchoolId($schoolId)
+	public function getCollegeListBySchoolId($schoolId,$condition=[],$offset=0,$limit=20)
 	{
 		$collegeModel = model('College');
 		$majorModel   = model('Major');
 
-		$collegeList  = $collegeModel->getCollegeListBySchoolId($schoolId);
+		$collegeList  = $collegeModel->getCollegeListBySchoolId($schoolId,
+			$condition,$offset,$limit);
 		if(empty($collegeList)){
 			return [];
 		}

@@ -67,12 +67,11 @@ class School
 	/**
 	 * 
 	 */
-	public function getSchoolList($condition,$limit=20,$offset=0)
+	public function getSchoolList($condition=[],$limit=20,$offset=0)
 	{
 		$collegeModel = model('College');
 		$schoolModel   = model('school');
-
-		$schoolList = model('School')->getSchoolList();
+		$schoolList = model('School')->getSchoolList($condition,$limit,$offset);
 		if(empty($schoolList)){
 			return [];
 		}

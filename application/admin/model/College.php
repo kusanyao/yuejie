@@ -29,11 +29,13 @@ class College
 		return $result;
 	}
 
-	public function getCollegeListBySchoolId($schoolId)
+	public function getCollegeListBySchoolId($schoolId,$condition=[],$offset,$limit)
 	{
 		$result = Db::name('college')->where(array(
 			'co_school' => $schoolId
-		))->order('co_insert_at desc')->select();
+		))
+		->limit($offset,$limit)
+		->order('co_insert_at desc')->select();
 		return $result;
 	}
 

@@ -40,13 +40,15 @@ class School
 	/**
 	 * 查找学校列表
 	 */
-	public function getSchoolList()
+	public function getSchoolList($condition=[],$limit=20,$offset=0)
 	{
-		$result = Db::name('school')->order('sc_insert_at desc')->select();
-		// $collegeModel = model('College');
-		// foreach ($result as &$v) {
-		// 	$v['collegeCount'] = $collegeModel->getCollegeCountBySchoolId($v['sc_id']);
-		// }
+		$where = [];
+		$where = array_merge($where,$condition);
+		$result = Db::name('school')
+			->where($where)
+			->order('sc_insert_at desc')
+			->limit($offset,$limit)
+			->select();
 		return $result;
 	}
 
@@ -76,5 +78,10 @@ class School
 			'st_school' => $schoolId,
 		))->find();
 		return $result;
+	}
+
+	public function getCount($condition=[])
+	{
+		return Db::name('school')->where($condition)->count();
 	}
 }

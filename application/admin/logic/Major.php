@@ -83,10 +83,11 @@ class Major
 	/**
 	 * 获取列表
 	 */
-	public function getMajorListByCollegeId($collegeId)
+	public function getMajorListByCollegeId($collegeId,$condition=[],$limit=20,$offset=0)
 	{
 		$majorModel = model('Major');
-		$majorList  = $majorModel->getMajorListByCollegeId($collegeId);
+		$majorList  = $majorModel->getMajorListByCollegeId($collegeId,
+			$condition,$limit,$offset);
 		foreach ($majorList as &$v) {
 			$majorThumb = $majorModel->getThumbByMajorId($v['ma_id']);
 			$v['thumb'] = $majorThumb['mh_path'];

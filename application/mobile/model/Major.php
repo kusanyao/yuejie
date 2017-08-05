@@ -45,6 +45,7 @@ class Major
 			'ma_start' => ['<',$nowTime],
 			'ma_end' => ['>',$nowTime],
 		);
+		$where = array_merge($where,$condition);
 		$result = Db::name('major')
 			->where($where)
 			->order('ma_sort desc')

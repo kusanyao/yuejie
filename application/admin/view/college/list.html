@@ -54,10 +54,11 @@
 			<td><?php echo $college['co_sort'];?></td>
 			<td>
 				<a href="/college/edit?id=<?php echo $college['co_id'];?>">编辑</a>
-				<a href="/major/list?college=<?php echo $college['co_id'];?>">专业管理</a>
+				<a href="/major/list?college=<?php echo $college['co_id'];?>&page=1&rows=4">专业管理</a>
 			</td>
 		</tr>
 		<?php endforeach;?>
 	</tbody>
 </table>
+<?php echo $pages;?>
 {/block}

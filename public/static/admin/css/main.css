@@ -150,3 +150,19 @@ header ul li a{
 .edit_from li{
 	min-height: 50px;
 }
+.pages{
+	margin-top: 20px;
+	float: right;
+}
+.pages .curr{
+	font-weight: bold;
+}
+.pages li{
+	margin: 2px;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	border: 1px solid #ccc;
+	float: left;
+}

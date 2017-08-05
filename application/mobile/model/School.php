@@ -29,4 +29,15 @@ class School
 			->select();
 		return $result;
 	}
+
+	/**
+	 * 根据专业id查专业的图片
+	 */
+	public function getThumbArrBySchoolId($schoolId)
+	{
+		$result = Db::name('school_thumb')->where(array(
+			'st_school' => $schoolId,
+		))->select();
+		return $result;
+	}
 }

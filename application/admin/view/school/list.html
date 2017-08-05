@@ -47,10 +47,11 @@
 			<td><?php echo $school['sc_sort'];?></td>
 			<td>
 				<a href="/school/edit?id=<?php echo $school['sc_id'];?>">编辑</a>
-				<a href="/college/list?school=<?php echo $school['sc_id'];?>">学院管理</a>
+				<a href="/college/list?school=<?php echo $school['sc_id'];?>&page=1&rows=4">学院管理</a>
 			</td>
 		</tr>
 		<?php endforeach;?>
 	</tbody>
 </table>
+<?php echo $pages;?>
 {/block}

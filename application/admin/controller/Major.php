@@ -10,14 +10,20 @@ class Major extends Base
 	 */
     public function list()
     {
+        $limit = $this->getLimit();
+        $page  = $this->getPage();
+        $offset = $this->getOffset();
         $collegeId  = input('param.college/d');
         if($collegeId <= 0){
             redirect('/college/list');
         }
-        $majorList = model('Major','logic')->getMajorListByCollegeId($collegeId);
+        $majorList = model('Major','logic')->getMajorListByCollegeId($collegeId,
+            [],$limit,$offset);
+        $count = model('Major')->getMajorCountByCollegeId($collegeId);
         return $this->fetch('list',array(
             'collegeId' => $collegeId,
-            'majorList' => $majorList
+            'majorList' => $majorList,
+            'pages' =>$this->getPageHtml($page,$count,$limit),
         ));
     }
 
