@@ -161,11 +161,11 @@
 	<li>
 		<span>上架时间：</span>
 		<?php if(empty($major)):?>
-			<input type="text" name="start" placeholder="例：2017-07-23 12:40">-
-			<input type="text" name="end" placeholder="例：2017-07-25 12:40">
+			<input class="datetime" type="text" name="start" placeholder="例：2017-07-23 12:40">-
+			<input class="datetime" type="text" name="end" placeholder="例：2017-07-25 12:40">
 		<?php else:?>
-			<input type="text" name="start" placeholder="例：2017-07-23 12:40" value="<?php echo date('Y-m-d H:i',$major['ma_start']);?>">-
-			<input type="text" name="end" placeholder="例：2017-07-25 12:40" value="<?php echo date('Y-m-d H:i',$major['ma_end']);?>">
+			<input class="datetime" type="text" name="start" placeholder="例：2017-07-23 12:40" value="<?php echo date('Y-m-d H:i',$major['ma_start']);?>">-
+			<input class="datetime" type="text" name="end" placeholder="例：2017-07-25 12:40" value="<?php echo date('Y-m-d H:i',$major['ma_end']);?>">
 		<?php endif;?>
 	</li>
 	<li>

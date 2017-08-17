@@ -1,4 +1,8 @@
 $(function(){
+	
+	$('.datetime').datetimepicker({
+	    format: 'yyyy-mm-dd hh:ii:ss'
+	});
 
 	function submit(callback){
 		var data = $("form").serialize();

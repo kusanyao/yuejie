@@ -33,7 +33,7 @@
 	<li>
 		<span class="fl">学院大图：</span>
 		<?php foreach($collegeThumb as $v):?>
-			<div class="show_img fl"><img src="<?php echo '/uploads/'.$v['ch_path'];?>"></div>;
+			<div class="show_img fl"><img src="<?php echo '/uploads/'.$v['ch_path'];?>"></div>
 		<?php endforeach;?>
 		<div class="select_file fl">+</div>		
 		<input id="inputfile" type="file" data-type="college_thumb" data-business="<?php echo $college?$college['co_id']:'';?>">
@@ -72,8 +72,8 @@
 	</li>
 	<li>
 		<span>上架时间：</span>
-		<input type="text" name="start" placeholder="例：2017-07-23 12:40" value="<?php echo $college?date('Y-m-d H:i',$college['co_start']):'';?>">-
-		<input type="text" name="end" placeholder="例：2017-07-23 12:40" value="<?php echo $college?date('Y-m-d H:i',$college['co_end']):'';?>">
+		<input class="datetime" type="text" name="start" placeholder="例：2017-07-23 12:40" value="<?php echo $college?date('Y-m-d H:i',$college['co_start']):'';?>">-
+		<input class="datetime" type="text" name="end" placeholder="例：2017-07-23 12:40" value="<?php echo $college?date('Y-m-d H:i',$college['co_end']):'';?>">
 	</li>
 	<li>
 		<span>显示状态：</span>
