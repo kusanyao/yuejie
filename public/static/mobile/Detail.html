@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<link rel="stylesheet" href="css/ydui.css" />
+		<link rel="stylesheet" href="css/main.css" />
+		<title></title>
+	</head>
+
+	<body>
+		<section class="g-flexview">
+			<!--头部-->
+			<header class="m-navbar">
+				<a onclick="urlMethod.indexURL()" class="navbar-item">
+					<i class="back-ico"></i>
+				</a>
+				<div class="navbar-center">
+					<span class="navbar-title">标题</span>
+				</div>
+			</header>
+			<section class="g-scrollview" id="scrollViewList">
+				<!--轮播图片-->
+				<div class="m-slider" data-ydui-slider="{autoplay:3000}">
+					<div class="slider-wrapper" id="schoolIntroduceAdList">
+					</div>
+					<div class="slider-pagination"></div>
+				</div>
+				<div id="schoolIntroduce" class="m-list" style="background-color:white;">
+				</div>
+				<!--间隔-->
+				<div class="h10"></div>
+				<!--学院总览-->
+				<div class="detailSchoolIntroduces">
+					<span>学院总览</span>
+				</div>
+				<!--专业，课程-->
+				<div id="schoolIntroduceMajorCurriculum" style="background-color:white;padding-bottom: 20px;">
+				</div>
+			</section>
+			<!--底部-->
+			<footer class="m-tabbar myfooter" id="footer">
+				<a href="#" class="tabbar-item myfooterItemW" onclick="fuck()">
+					<span class="tabbar-icon">
+         			   <span class="tabbar-txt">首页</span>
+					</span>
+				</a>
+				<a href="#" class="tabbar-item tabbar-active myfooterItemG" onclick="fuck()">
+					<span class="tabbar-icon">
+           			<span class="badge badge-danger badge-diy2" style="margin-left: 0px;">2</span>
+					<span class="tabbar-txt" style="color: white;">对比</span>
+					</span>
+				</a>
+			</footer>
+
+		</section>
+	</body>
+
+</html>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/ydui.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+<script type="text/javascript" src="js/template-web.js"></script>
+<script type="text/javascript" src="js/module/moduleArt.js"></script>
+<script type="text/javascript" src="js/data/data.js"></script>
+<script>
+	function fuck() {
+		alert("fuck");
+	}
+
+	introduce();
+
+	function introduce() {
+		var render = template.compile(stringHTML.detailSchoolIntroduceModule());
+		var html = render(data.detailSchoolIntroduce());
+		$("#schoolIntroduce").append(html);
+	}
+	adList();
+
+	function adList() {
+		var render = template.compile(stringHTML.detailSchoolIntroduceADListModule());
+		var html = render(data.detailSchoolIntroduceAD());
+		$("#schoolIntroduceAdList").append(html);
+	}
+	MaJorCurriculumList();
+
+	function MaJorCurriculumList() {
+		var render = template.compile(stringHTML.detailSchoolIntroduceMajorCurriculumModule());
+		var html = render(data.detailSchoolIntroduceMajorCurriculum());
+		$("#schoolIntroduceMajorCurriculum").append(html);
+	}
+	//	YDUI.dialog.toast("fuck","none",10000);
+	//	YDUI.util.localStorage.get(KeyValue.differentKey);
+</script>

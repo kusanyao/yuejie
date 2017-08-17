@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<link rel="stylesheet" href="css/ydui.css" />
+		<link rel="stylesheet" href="css/main.css" />
+		<title></title>
+	</head>
+
+	<body>
+		<section class="g-flexview">
+			<!--头部-->
+			<header class="m-navbar">
+				<div class="navbar-center">
+					<span class="navbar-title">院校库</span>
+				</div>
+			</header>
+			<!--中间网格-->
+			<div class="m-grids-3">
+				<div class="grids-item" onclick="changeMenu()">
+					<div class="grids-txt">
+						<span>学费</span>
+					</div>
+				</div>
+				<a href="#" class="grids-item" onclick="changeMenu()">
+					<div class="grids-txt">
+						<span>类型</span>
+					</div>
+				</a>
+				<a href="#" class="grids-item" onclick="changeMenu()">
+					<div class="grids-txt">
+						<span>类型</span>
+						<i class="icon-more"></i>
+					</div>
+				</a>
+			</div>
+			<!--中间-->
+			<div class="g-scrollview">
+				<!---->
+				<div class="m-scrolltab" id="J_ScrollTab">
+					<!--下拉-->
+					<div id="downMenu" class="maskAll" style="display: none;">
+
+					</div>
+					<div class="scrolltab-nav" id="provinceListName">
+					</div>
+					<div class="scrolltab-content" id="schoolNameList">
+					</div>
+				</div>
+
+			</div>
+			<!--底部-->
+			<footer class="m-tabbar" id="footer">
+			</footer>
+		</section>
+	</body>
+
+</html>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/ydui.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+<script type="text/javascript" src="js/template-web.js"></script>
+<script type="text/javascript" src="js/module/moduleArt.js"></script>
+<script type="text/javascript" src="js/data/data.js"></script>
+<script>
+	function getMenuListData() {
+		var data = {
+			menuList: [{
+				name: "不限",
+				id: "1",
+				isTrue: false
+			}, {
+				name: "8k以下",
+				id: "2",
+				isTrue: true
+			}, {
+				name: "8~15k",
+				id: "3",
+				isTrue: false
+			}, {
+				name: "15k以上",
+				id: "4",
+				isTrue: false
+			}]
+		};
+		return data;
+	}
+</script>
+
+<!--下拉菜单-->
+<script id="downMenuList" type="text/html">
+	<div class="m-cell" style="width: 100%;margin: 0;">
+		{{each menuList item}}
+		<label class="cell-item">
+        <span class="cell-left">{{item.name}}</span>
+        <label class="cell-right">
+            <input id={{item.id}} type="radio" name="radio" value= {{item.name}}  {{item.isTrue?"checked":""}}/>
+            <i class="cell-radio-icon"></i>
+        </label>
+		</label>
+		{{/each }}
+	</div>
+</script>
+<script>
+	loadData();
+
+	function loadData() {
+		var datas = data.schoolListData().list;
+		for(var itemKey in datas) {
+			var province = template.compile(stringHTML.schoolProvinceItemModule());
+			var shoolList = template.compile(stringHTML.schoolListItemModule());
+			$("#provinceListName").append(province(datas[itemKey]));
+			$("#schoolNameList").append(shoolList(datas[itemKey]));
+		}
+		$('#J_ScrollTab').scrollTab({
+			initIndex: 0
+		});
+	}
+
+	function loadDataMenuList() {
+		$("#downMenu").empty();
+		var data = getMenuListData();
+		var menu = template("downMenuList", data);
+		$("#downMenu").append(menu);
+		$("input[name='radio']").change(function() {
+			var v = $("input[name='radio']:checked").val();
+			alert(v);
+			baseMethod.setViewDisplay("downMenu", "none");
+			isShow = !isShow;
+		});
+	}
+
+	var isShow = false;
+
+	function changeMenu() {
+		if(isShow) {
+			baseMethod.setViewDisplay("downMenu", "none");
+		} else {
+			baseMethod.setViewDisplay("downMenu", "block");
+			loadDataMenuList();
+		}
+		isShow = !isShow;
+	}
+
+	setFooter();
+
+	function setFooter() {
+		var renders = template.compile(stringHTML.footerItemModule());
+		var htmls = renders(data.footerListData(2));
+		$("#footer").append(htmls);
+	}
+</script>

@@ -1,0 +1,379 @@
+.indexMiddle {
+	margin: 10px;
+}
+
+.fontwhite {
+	color: white;
+}
+
+.h5 {
+	height: 5px;
+}
+
+.h10 {
+	height: 10px;
+}
+
+.list-mes-item {
+	margin-top: 5px;
+}
+
+.badge-radius {
+	margin-left: 10px;
+}
+
+.indexListLine {
+	height: 1px;
+	width: 100%;
+	color: #DFDFDF;
+}
+
+.schoolListItem {
+	height: 48px;
+	font-size: 16px;
+}
+
+.zeroMarginPadding {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.cell-itemnew:not(:last-child):after {
+	margin-left: 0px;
+	border-bottom: 1px solid #B2B2B2;
+}
+
+.indexselect {
+	-webkit-box-flex: 1;
+	height: 30;
+	border: none;
+	line-height: 1;
+	margin: 0 auto;
+	font-size: 15px;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	text-align: center;
+	flex: 1;
+	width: 100%;
+	outline: none;
+}
+
+.myHeader {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	position: absolute;
+	height: 240px;
+	position: relative;
+	display: flex;
+	background-color: #00c7aa;
+}
+
+.myMiddle {
+	vertical-align: middle;
+	height: 100%;
+	background-color: inherit;
+	border-bottom: 0px;
+}
+
+.detailSchoolIntroduceMargin {
+	margin: 10px;
+	background-color: white;
+}
+
+.detailSchoolIntroduces {
+	display: flex;
+	width: 100%;
+	height: 42px;
+	font-size: 14px;
+	text-align: center;
+	background-color: white;
+	color: #00c7aa;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.deteilSchoolTitleDiv {
+	border-top: 2px solid #00c7aa;
+	width: 100%;
+	height: 38px;
+	background-color: white;
+}
+
+.deteilSchoolTitle {
+	width: 120px;
+	height: 100%;
+	margin-top: -1px;
+	border-top: 38px solid #00c7aa;
+	border-right: 20px solid transparent;
+}
+
+.deteilSchoolTitle .span {
+	position: relative;
+	top: -31px;
+	color: white;
+	font-size: 16px;
+	margin-left: 15px;
+}
+
+.detailSchoolIntroducesMajor {
+	line-height: 2;
+	padding: 10px 20px;
+	font-size: 14px;
+	color: #666666;
+}
+
+.detailSchoolIntroducesCompulsoryExplain {
+	background-color: #efefef;
+	margin: 0px 20px;
+}
+
+.myfooter {
+	height: 48px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	background-color: white;
+}
+
+.myfooterItemW {
+	height: 100%;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	background-color: white;
+}
+
+.myfooterItemG {
+	height: 100%;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	background-color: #00c7aa;
+}
+
+.grids-item-no-border:after {
+	border: 0px;
+}
+
+.badge-diy2 {
+	background-color: white;
+	color: #00c7aa;
+	border-color: white;
+	margin-left: 0px;
+}
+
+.badge-diy2:after {
+	border-color: white;
+}
+
+.badge-diy3 {
+	background-color: black;
+	color: white;
+	border-color: black;
+	margin-left: 0px;
+}
+
+.badge-diy3:after {
+	border-color: black;
+}
+
+.badge-diy {
+	background-color: #ff8969;
+	color: #FFFFFF;
+}
+
+.intdiv {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: rgba(0, 0, 0, .8);
+	line-height: 14px;
+	z-index: 1500;
+	font-size: 13px;
+	color: #FFF;
+	padding: 15px 12px;
+	opacity: 0;
+	-webkit-animation: downIn .2s linear forwards;
+	animation: downIn .2s linear forwards;
+	word-break: break-all
+}
+
+.outdiv {
+	opacity: 1;
+	-webkit-animation: upOut .15s linear forwards;
+	animation: upOut .15s linear forwards
+}
+
+.maskAll {
+	background-color: rgba(0, 0, 0, .4);
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	top: 0;
+	z-index: 1500;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: flex-start;
+}
+
+.diyToastDiv {
+	background-color: rgba(0, 0, 0, .4);
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	top: 0;
+	z-index: 12;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.diyToast {
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	padding: 15px;
+	min-width: 138px;
+	width: 60%;
+	max-width: 60%;
+	background: rgba(40, 40, 40, .8);
+	border-radius: 3px;
+	color: #FFF;
+	z-index: 1501;
+	-webkit-animation: zoomIn .06s ease forwards;
+	animation: zoomIn .06s ease forwards;
+}
+
+.myDiv {
+	/**/
+	height: 100%;
+	width: 100%;
+	/**/
+	position: relative;
+	/*相对定位*/
+	display: flex;
+	/*弹性布局，，，，子元素用flex:1来获取占比*/
+	align-items: center;
+}
+
+.myDiv .middle,
+.myDiv .left,
+.myDiv .right {
+	text-align: center;
+	font: 16px;
+	color: white;
+	padding: 0;
+	margin: 0;
+}
+
+.myDiv .middle {
+	flex: 2;
+	-webkit-box-ordinal-group: 3;
+	-webkit-order: 2;
+	-ms-flex-order: 2;
+	order: 2;
+}
+
+.myDiv .left {
+	flex: 1;
+	-webkit-box-ordinal-group: 2;
+	-webkit-order: 1;
+	-ms-flex-order: 1;
+	order: 1;
+	text-align: left;
+}
+
+.myDiv .right {
+	flex: 1;
+	-webkit-box-ordinal-group: 4;
+	-webkit-order: 3;
+	-ms-flex-order: 3;
+	order: 3;
+	text-align: right;
+}
+
+.btn-add {
+	width: 100%;
+	background-color: #CCC;
+	color: #F0F0F0;
+	height: 38px;
+	line-height: 0;
+	margin-top: 0;
+}
+
+.btn-add:active {
+	width: 100%;
+	background-color: #666666;
+}
+
+.btn-add-off {
+	width: 100%;
+	background-color: #CCC;
+	color: #F0F0F0;
+	height: 38px;
+	line-height: 0;
+	margin-top: 0;
+	pointer-events: none
+}
+
+.btn-add-off:active {
+	width: 100%;
+	background-color: #666666;
+}
+
+.btn-add-contrast {
+	width: 100%;
+	background-color: #00c7aa;
+	color: #F0F0F0;
+	height: 38px;
+	line-height: 0;
+	margin-top: 0;
+}
+
+.btn-add-contrast:active {
+	width: 100%;
+	background-color: #00b399;
+}
