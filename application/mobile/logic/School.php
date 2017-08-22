@@ -27,6 +27,11 @@ class School
 			->order('sc_sort asc')
 			->group('sc_id')
 			->select();
+		$schoolModel = Model('School');
+		foreach ($result as $key => &$value) {
+			$thumb = $schoolModel->getThumbBySchoolId($value['sc_id']);
+			$value['thumb'] = '/uploads/'.$thumb['st_path'];
+		}
 		return $result;
 	}
 }

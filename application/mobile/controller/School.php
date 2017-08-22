@@ -61,7 +61,7 @@ class School extends Base
 			3 => ['ma_tuition'=>['between',[8000,15000]]],// 8千-1.5万
 			4 => ['ma_tuition'=>['>',15000]],// 1.5万以上
 		);
-		$planArr = array(
+		$planArr = array( // 授课安排
 			1 => [],// 不限
 			2 => ['ma_plan'=>'全日制'],// 全日制
 			3 => ['ma_plan'=>'在职'],// 在职
@@ -86,8 +86,8 @@ class School extends Base
 		}
 		$condition = array_merge($tuitionArr[$tuition],$planArr[$plan],$natureArr[$nature]);
 		$result      = [];
-        $schoolModel = model('School','logic');
-        $schoolList = $schoolModel->getSchoolList($condition,$this->getLimit(),$this->getOffset());
+        $schoolLogic = model('School','logic');
+        $schoolList = $schoolLogic->getSchoolList($condition,$this->getLimit(),$this->getOffset());
         return json([
         	'code'   => 200,
         	'result' => $schoolList

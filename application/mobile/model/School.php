@@ -40,4 +40,15 @@ class School
 		))->select();
 		return $result;
 	}
+
+	/**
+	 * 获取单个路径
+	 */
+	public function getThumbBySchoolId($schoolId)
+	{
+		$result = Db::name('school_thumb')->where(array(
+			'st_school' => $schoolId,
+		))->find();
+		return $result;
+	}
 }

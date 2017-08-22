@@ -45,6 +45,9 @@ class College extends Base
     public function ajax_list()
     {
     	$schoolId = input('param.school/d');
+        if(!($schoolId>0)){
+            return json(['code'=>104,'error'=>'参数错误']);
+        }
     	$collegeList = model('College')->getCollegeListBySchoolId($schoolId,[],
             $this->getLimit(),$this->getOffset());
         $result = [];
