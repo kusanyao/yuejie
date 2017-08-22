@@ -20,7 +20,7 @@ class Major
 	/**
 	 * 添加专业的缩略图
 	 */
-	public function addMajorThumbb($majorId,$majorThumbObj)
+	public function addMajorThumb($majorId,$majorThumbObj)
 	{
 		$result = false;
 		if(empty($majorId) || empty($majorThumbObj)){

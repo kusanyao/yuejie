@@ -12,6 +12,9 @@ $(function(){
 		    	alert('保存成功');
 		    	if(typeof callback == 'function'){
 		    		callback(result.result);
+		    	}else{
+		    		var callbackUrl = $('#edit_submit').data('callback');
+		    		window.location.href = callbackUrl;
 		    	}
 		    }else{
 		    	alert(result.error);

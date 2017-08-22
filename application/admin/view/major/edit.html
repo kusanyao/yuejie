@@ -43,8 +43,8 @@
 			</div>
 		<?php endforeach;?>
 		<div class="select_file fl">+</div>		
-		<input id="inputfile" type="file" data-type="major_thum" data-business="<?php echo $major?$major['ma_id']:'';?>">
-		<input type="hidden" name="major_thum">
+		<input id="inputfile" type="file" data-type="major_thumb" data-business="<?php echo $major?$major['ma_id']:'';?>">
+		<input type="hidden" name="major_thumb">
 	</li>
 	<li class="clear">
 		<span>科段支持：</span>
@@ -183,8 +183,10 @@
 		
 	</li>
 	<li>
-		<input id="edit_submit" type="button" name="" value="保存" data-url="/major/ajax_edit">
-		<input id="edit_deal" type="button" name="" value="编辑专业详情" data-url="/major/ajax_edit">
+		<input id="edit_submit" type="button" name="" value="保存" data-url="/major/ajax_edit"
+			data-callback="/major/list?college=<?php echo $college['co_id'];?>&page=1&rows=4" >
+		<input id="edit_deal" type="button" name="" value="编辑专业详情" 
+			data-url="/major/ajax_edit">
 	</li>
 	</form>
 </ul>
