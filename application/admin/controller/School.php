@@ -116,4 +116,21 @@ class School extends Base
             ));
         }
     }
+
+    public function delThumb()
+    {
+        $id = input('param.id/d');
+        $res = Db::name('schoolThumb')->where(['st_id'=>$id])->update(['st_delete'=>2]);
+        if($res){
+            return json(array(
+                'code'   => 200,
+                'result' => 'OK'
+            ));
+        }else{
+            return json(array(
+                'code'   => 500,
+                'error' => '删除失败'
+            ));
+        }
+    }
 }

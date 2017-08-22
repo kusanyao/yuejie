@@ -37,7 +37,10 @@
 	<li>
 		<span class="fl">专业大图：</span>
 		<?php foreach($majorThumb as $v):?>
-			<div class="show_img fl"><img src="<?php echo '/uploads/'.$v['mh_path'];?>"></div>
+			<div class="show_img fl">
+				<img src="<?php echo '/uploads/'.$v['mh_path'];?>">
+				<div class="divX" data-id="<?php echo $v['mh_id'];?>" data-url="/major/delThumb">x</div>
+			</div>
 		<?php endforeach;?>
 		<div class="select_file fl">+</div>		
 		<input id="inputfile" type="file" data-type="major_thum" data-business="<?php echo $major?$major['ma_id']:'';?>">

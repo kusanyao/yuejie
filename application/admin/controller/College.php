@@ -143,4 +143,21 @@ class College extends Base
             ));
         }
     }
+
+    public function delThumb()
+    {
+        $id = input('param.id/d');
+        $res = Db::name('collegeThumb')->where(['ch_id'=>$id])->update(['ch_delete'=>2]);
+        if($res){
+            return json(array(
+                'code'   => 200,
+                'result' => 'OK'
+            ));
+        }else{
+            return json(array(
+                'code'   => 500,
+                'error' => '删除失败'
+            ));
+        }
+    }
 }

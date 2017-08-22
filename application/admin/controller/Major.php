@@ -192,4 +192,21 @@ class Major extends Base
             'error' => ''
         ));
     }
+
+    public function delThumb()
+    {
+        $id = input('param.id/d');
+        $res = Db::name('majorThumb')->where(['mh_id'=>$id])->update(['mh_delete'=>2]);
+        if($res){
+            return json(array(
+                'code'   => 200,
+                'result' => 'OK'
+            ));
+        }else{
+            return json(array(
+                'code'   => 500,
+                'error' => '删除失败'
+            ));
+        }
+    }
 }

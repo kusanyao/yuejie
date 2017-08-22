@@ -65,6 +65,7 @@ class School
 	{
 		$result = Db::name('school_thumb')->where(array(
 			'st_school' => $schoolId,
+			'st_delete' => 1,
 		))->select();
 		return $result;
 	}

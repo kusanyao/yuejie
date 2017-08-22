@@ -70,6 +70,7 @@ class Major
 	{
 		$result = Db::name('major_thumb')->where(array(
 			'mh_major' => $majorId,
+			'mh_delete' => 1
 		))->select();
 		return $result;
 	}

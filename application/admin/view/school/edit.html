@@ -39,7 +39,10 @@
 	<li>
 		<span class="fl">高校大图：</span>
 		<?php foreach($schoolThumb as $v):?>
-			<div class="show_img fl"><img src="<?php echo '/uploads/'.$v['st_path'];?>"></div>
+			<div class="show_img fl">
+				<img src="<?php echo '/uploads/'.$v['st_path'];?>">
+				<div class="divX" data-id="<?php echo $v['st_id'];?>" data-url="/school/delThumb">x</div>
+			</div>
 		<?php endforeach;?>
 		<div class="select_file fl">+</div>		
 		<input id="inputfile" type="file" data-type="school_thumb" data-business="<?php echo $school?$school['sc_id']:'';?>">

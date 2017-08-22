@@ -52,6 +52,7 @@ class College
 	{
 		$result = Db::name('college_thumb')->where(array(
 			'ch_college' => $CollegeId,
+			'ch_delete' => 1
 		))->select();
 		return $result;
 	}

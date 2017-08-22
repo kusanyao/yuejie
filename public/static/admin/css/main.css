@@ -114,6 +114,18 @@ header ul li a{
 	border-bottom: 1px solid #000;
 	margin-bottom: 30px;
 }
+.divX  
+{  
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+   	line-height: 15px;
+   	border: 1px solid #ccc;
+   	border-radius: 10px;
+}  
 #inputfile{
 	display: none;
 }
@@ -131,6 +143,7 @@ header ul li a{
 	width: 100px;
 	height: 100px;
 	border: 1px solid #ccc;
+	position: relative;
 }
 .show_img img{
 	width: 100px;

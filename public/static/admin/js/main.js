@@ -94,4 +94,23 @@ $(function(){
 			}
 		});
 	});
+
+	//删除图片
+	$('.divX').click(function(){
+		var thisImg = $(this);
+		var id  = thisImg.data('id');
+		var url = thisImg.data('url');
+		$.ajax({
+			url:url,
+			type:'POST',
+			data:{id:id},
+			success: function(res){
+				if(res.code == 200 ){
+					thisImg.parent().remove();
+			    }else{
+			    	alert(res.error);
+			    }
+			}
+		});
+	});
 });
