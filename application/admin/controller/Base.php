@@ -46,6 +46,9 @@ class Base extends \think\Controller
 	}
 	protected function getPageHtml($curr,$total,$rows,$num=5)
     {
+    	if($total<=0){
+    		return '';
+    	}
         $pageArr[] = $minPage = $maxPage = $curr;
         $pageTotal = ceil($total/$rows);
         while (1) {
